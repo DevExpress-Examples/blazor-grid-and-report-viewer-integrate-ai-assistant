@@ -1,0 +1,93 @@
+﻿
+.main-layout {
+    display: flex;
+    height: 100vh;
+}
+
+.my-list {
+    height: 100vh;
+    width: 420px;
+}
+
+.my-report {
+    height: 100vh;
+    width: 100%;
+}
+
+.my-chat-content > p:last-child {
+    margin-bottom: 0;
+}
+
+.my-report-chat {
+    position: absolute;
+    top: 70px;
+    bottom: 0px;
+    left: 0;
+    right: 0;
+    user-select: text;
+}
+
+.dxd-icon-AI::after {
+    content: '';
+    background-image: url(./ai-tab-icon.svg);
+    background-position: center;
+    background-size: 18px;
+    background-repeat: no-repeat;
+    width: 18px;
+    height: 18px;
+}
+
+.my-richedit {
+    width: 100%;
+    height: 100%;
+}
+
+.my-grid {
+    height: 100vh;
+}
+
+.my-grid-chat {
+    width: 600px;
+    height: 100vh;
+}
+
+/*grid*/
+.priority-info {
+    background-color: #00a9e6;
+}
+
+.priority-warning {
+    background-color: #fd7e14;
+}
+
+.status-icon {
+    width: 0.5rem;
+    height: 0.5rem;
+}
+
+.priority-danger {
+    background-color: #dc3545;
+}
+
+.status-icon-new {
+    background-color: #00a9e6;
+}
+
+.status-icon-rejected {
+    background-color: #dc3545;
+}
+
+.status-icon-postponed {
+    background-color: #888;
+}
+
+.status-icon-fixed {
+    background-color: #28a745;
+}
+
+.bug-icon {
+    width: 16px;
+    height: 17px;
+    background-image: url("./bug.svg");
+    vertical-align: middle;
+}

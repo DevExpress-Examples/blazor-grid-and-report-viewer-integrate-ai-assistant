@@ -1,0 +1,35 @@
+﻿@using System.Text.RegularExpressions
+@using DevExpress.AI.Samples.Blazor.Models
+@using AIIntegration.Services.Chat
+@using DevExpress.AIIntegration.Blazor.Chat
+@using DevExpress.AIIntegration.OpenAI.Services
+@using Markdig
+
+<DxAIChat CssClass="my-report-chat" ResponseContentFormat="ResponseContentFormat.Markdown" Initialized="ChatInitialized">
+    <MessageContentTemplate>
+        <div class="my-chat-content">
+            @ToHtml(context.Content)
+        </div>
+    </MessageContentTemplate>
+</DxAIChat>
+
+@code {
+    [Parameter] public UserAssistantTabContentModel Model { get; set; }
+    string ClearAnnotations(string text) {
+    //To clear out the annotations in a response from assistant.
+        return Regex.Replace(text, @"\【.*?】", "");
+    }
+    
+    MarkupString ToHtml(string text) {
+        text = ClearAnnotations(text);
+        return (MarkupString)Markdown.ToHtml(text);
+    }
+
+    async Task ChatInitialized(IAIChat aIChat) {
+        using (MemoryStream ms = Model.GetReportData()) {
+            await aIChat.SetupAssistantAsync(new OpenAIAssistantOptions("report.pdf", ms) {
+                Instructions = AssistantHelper.GetAIAssistantInstructions("pdf")
+            });
+        }
+    }
+}

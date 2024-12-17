@@ -1,0 +1,65 @@
+﻿@page "/report"
+@using Azure.AI.OpenAI.Assistants
+@using DevExpress.Blazor.Reporting
+@using DevExpress.XtraReports
+@using DevExpress.XtraReports.UI;
+@using DevExpress.XtraReports.Parameters;
+@using DevExpress.Blazor;
+@using DevExpress.AI.Samples.Blazor.Components.Reporting
+@using DevExpress.AI.Samples.Blazor.Services;
+@using DevExpress.AI.Samples.Blazor.Models;
+@using System.IO;
+@using DevExpress.Blazor.Reporting.Models;
+@using DevExpress.Blazor.Reporting.EditingFields;
+
+<DxListBox Data="@DemoReportList" CssClass="my-list" Value="@DemoReportName" ValueChanged="@(async (string name) => await DemoReportNameChanged(name))"></DxListBox>
+<DxReportViewer @ref="Viewer" CssClass="my-report" OnCustomizeTabs="OnCustomizeTabs">
+</DxReportViewer>
+
+@code {
+    [Inject] IDemoReportSource DemoReportSource { get; set; }
+    List<string> DemoReportList { get; set; }
+    string DemoReportName { get; set; }
+    XtraReport CurrentReport { get; set; }
+
+    DxReportViewer Viewer { get; set; }
+    public enum Gender { Male, Female }
+
+    async Task DemoReportNameChanged(string name) {
+        DemoReportName = name;
+        await UpdateReportAsync(name);
+    }
+
+    async Task UpdateReportAsync(string reportName) {
+        CurrentReport = GetReport(reportName);
+        await Viewer.OpenReportAsync(CurrentReport);
+    }
+    XtraReport GetReport(string reportName) {
+        XtraReport report = DemoReportSource.GetReport(reportName);
+        return report;
+    }
+    protected override Task OnInitializedAsync() {
+        DemoReportList = DemoReportSource.GetReportList().Keys.ToList();
+        DemoReportName = "Market Share Report";
+        return base.OnInitializedAsync();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender) {
+        if(firstRender) {
+            await UpdateReportAsync(DemoReportName);
+        }
+        base.OnAfterRender(firstRender);
+    }
+
+    void OnCustomizeTabs(List<TabModel> tabs) {
+        tabs.Add(new TabModel(new UserAssistantTabContentModel(() => CurrentReport), "AI", "AI Assistant") {
+                TabTemplate = (tabModel) => {
+                    return (builder) => {
+                        builder.OpenComponent<AITabRenderer>(0);
+                        builder.AddComponentParameter(1, "Model", tabModel.ContentModel);
+                        builder.CloseComponent();
+                    };
+                }
+            });
+    }
+}

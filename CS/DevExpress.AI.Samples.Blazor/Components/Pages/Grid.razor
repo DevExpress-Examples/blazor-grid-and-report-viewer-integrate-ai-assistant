@@ -1,0 +1,166 @@
+﻿@page "/grid"
+@page "/"
+@using DevExpress.AI.Samples.Blazor.Data;
+@using DevExpress.AI.Samples.Blazor.Services
+@using DevExpress.AIIntegration.Blazor.Chat
+@using DevExpress.AIIntegration.OpenAI.Services
+
+@inject IssuesDataService IssuesDataService
+
+<DxGrid @ref="grid" Data="@DataSource" CssClass="my-grid" ShowGroupPanel="true" TextWrapEnabled="false" AutoExpandAllGroupRows="true"
+        CustomizeFilterRowEditor="Grid_CustomizeFilterRowEditor" FilterMenuButtonDisplayMode="GridFilterMenuButtonDisplayMode.Always"
+        ShowSearchBox="true" ColumnResizeMode="GridColumnResizeMode.NextColumn"
+        ShowAllRows="true" AllowSelectRowByClick="true" @bind-SearchText="@GridSearchText"
+        HighlightRowOnHover="true">
+    <Columns>
+        <DxGridSelectionColumn Width="75px" />
+        <DxGridDataColumn FieldName="Name" Caption="Subject" MinWidth="220" AllowGroup="false">
+            <CellDisplayTemplate>
+                @GetIssueTypeIconHtml(((Issue)context.DataItem).Type)
+                @context.HighlightedDisplayText
+            </CellDisplayTemplate>
+        </DxGridDataColumn>
+        <DxGridDataColumn FieldName="ProjectID" Caption="Project" GroupIndex="0" Width="220px">
+            <EditSettings>
+                <DxComboBoxSettings Data="ProjectList" ValueFieldName="ID" TextFieldName="Name" 
+                                    SearchFilterCondition="ListSearchFilterCondition.Contains" />
+            </EditSettings>
+        </DxGridDataColumn>
+        <DxGridDataColumn FieldName="CreatorID" Caption="Owner" Width="140px" MinWidth="100">
+            <EditSettings>
+                <DxComboBoxSettings Data="UserList" ValueFieldName="ID" TextFieldName="FullName"
+                                    SearchFilterCondition="ListSearchFilterCondition.Contains" />
+            </EditSettings>
+        </DxGridDataColumn>
+        <DxGridDataColumn FieldName="OwnerID" Caption="Assignee" Width="140px" MinWidth="100">
+            <EditSettings>
+                <DxComboBoxSettings Data="UserList" ValueFieldName="ID" TextFieldName="FullName"
+                                    SearchFilterCondition="ListSearchFilterCondition.Contains" />
+            </EditSettings>
+        </DxGridDataColumn>
+        <DxGridDataColumn FieldName="Status" Caption="Status" Width="140px" MinWidth="140"
+                          TextAlignment="GridTextAlignment.Left">
+            <EditSettings>
+                <DxComboBoxSettings Data="StatusList" />
+            </EditSettings>
+            <CellDisplayTemplate>
+                <div class="d-flex align-items-center">
+                    @GetIssueStatusIcon((context.DataItem as Issue).Status)
+                    @context.HighlightedDisplayText
+                </div>
+            </CellDisplayTemplate>
+        </DxGridDataColumn>
+        <DxGridDataColumn FieldName="CreatedDate" Caption="Created" Width="120px" MinWidth="120" />
+        <DxGridDataColumn FieldName="ModifiedDate" Caption="Modified" Width="120px" MinWidth="120" />
+        <DxGridDataColumn FieldName="FixedDate" Caption="Fixed" Width="120px" MinWidth="120" />
+        <DxGridDataColumn FieldName="Priority" Caption="Priority" Width="90px" TextAlignment="GridTextAlignment.Left"
+                          AllowGroup="false" AllowSort="false">
+            <FilterRowCellTemplate Context="filterContext">
+                <DxButton RenderStyle="ButtonRenderStyle.Link" CssClass="p-0 w-100" Enabled="IsGridFiltered()"
+                          Click="@(() => grid.ClearFilter())">Clear</DxButton>
+            </FilterRowCellTemplate>
+            <CellDisplayTemplate>
+                <div>@GetIssuePriorityIconHtml((context.DataItem as Issue).Priority)</div>
+            </CellDisplayTemplate>
+        </DxGridDataColumn>
+    </Columns>
+    <GroupSummary>
+        <DxGridSummaryItem FieldName="ID" SummaryType="GridSummaryItemType.Count" />
+    </GroupSummary>
+    <TotalSummary>
+        <DxGridSummaryItem FieldName="ID" SummaryType="GridSummaryItemType.Count" FooterColumnName="Name" />
+    </TotalSummary>
+</DxGrid>
+<DxAIChat @ref="chat" CssClass="my-grid-chat">
+    <MessageContentTemplate>
+        <div class="my-chat-content">
+            @ToHtml(context.Content)
+        </div>
+    </MessageContentTemplate>
+</DxAIChat>
+
+@code {
+    IGrid grid;
+    IAIChat chat;
+    MarkupString ToHtml(string text) {
+        return (MarkupString)Markdig.Markdown.ToHtml(text);
+    }
+    IEnumerable<Issue> DataSource { get; set; }
+    IEnumerable<Project> ProjectList { get; set; }
+    IEnumerable<User> UserList { get; set; }
+    static List<IssueStatus?> StatusList { get; set; } =
+    ((IssueStatus[])Enum.GetValues(typeof(IssueStatus))).Cast<IssueStatus?>().ToList();
+    string GridSearchText = "";
+    [Parameter]
+    public SizeMode SizeMode { get; set; }
+    [Parameter]
+    public EventCallback<Issue> GotoDetailsView { get; set; }
+    protected override async Task OnInitializedAsync() {
+        ProjectList = (await IssuesDataService.GetProjectsAsync())
+        .OrderBy(i => i.Name)
+        .ToList();
+        UserList = (await IssuesDataService.GetUsersAsync())
+        .OrderBy(i => i.FullName)
+        .ToList();
+        DataSource = await IssuesDataService.GetIssuesAsync();
+    }
+    void Grid_CustomizeFilterRowEditor(GridCustomizeFilterRowEditorEventArgs e) {
+        if(e.FieldName == "CreatedDate" || e.FieldName == "ModifiedDate" || e.FieldName == "FixedDate")
+            ((ITextEditSettings)e.EditSettings).ClearButtonDisplayMode = DataEditorClearButtonDisplayMode.Never;
+    }
+    public MarkupString GetIssueStatusIcon(IssueStatus status) {
+        string statusIconName = status switch {
+            IssueStatus.Fixed => "fixed",
+            IssueStatus.Postponed => "postponed",
+            IssueStatus.Rejected => "rejected",
+            IssueStatus.New => "new",
+            _ => throw new NotSupportedException()
+        };
+        string html = string.Format("<span class='status-icon status-icon-{0} me-1 rounded-circle d-inline-block'></span>",
+        statusIconName);
+        return new MarkupString(html);
+    }
+    public MarkupString GetIssuePriorityIconHtml(IssuePriority priority) {
+        string priorytyClass = "warning";
+        string title = "Medium";
+        if(priority == IssuePriority.High) {
+            priorytyClass = "danger";
+            title = " High ";
+        }
+        if(priority == IssuePriority.Low) {
+            priorytyClass = "info";
+            title = " Low ";
+        }
+        string html = string.Format("<span class='badge priority-{0} py-1 px-2' title='{1} Priority'>{1}</span>", priorytyClass,
+        title);
+        return new MarkupString(html);
+    }
+    public MarkupString GetIssueTypeIconHtml(IssueType type) {
+        string html = "";
+        if(type == IssueType.Bug)
+            html = "<span class='bug-icon d-inline-block me-1' title='Bug'></span>";
+        return new MarkupString(html);
+    }
+    public bool IsGridFiltered() {
+        return !object.ReferenceEquals(grid.GetFilterCriteria(), null);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender) {
+        if(firstRender) {
+            using(MemoryStream ms = new MemoryStream()) {
+                grid.BeginUpdate();
+                grid.ShowGroupedColumns = true;
+                await grid.ExportToXlsxAsync(ms, new GridXlExportOptions() {
+                        ExportDisplayText = true
+                    });
+                await chat.SetupAssistantAsync(new OpenAIAssistantOptions("grid_data.xlsx", ms) {
+                    Instructions = AssistantHelper.GetAIAssistantInstructions("xlsx"),
+                    UseFileSearchTool = false
+                });
+                grid.ShowGroupedColumns = false;
+                grid.EndUpdate();
+            }
+        }
+        await base.OnAfterRenderAsync(firstRender);
+    }
+}
