@@ -6,7 +6,7 @@
 
 .my-list {
     height: 100vh;
-    width: 420px;
+    width: 200px;
 }
 
 .my-report {
@@ -90,4 +90,107 @@
     height: 17px;
     background-image: url("./bug.svg");
     vertical-align: middle;
+}
+
+.welcome-gridlayout {
+    margin: auto;
+    width: auto;
+    height: auto;
+}
+
+    .welcome-gridlayout .dxbl-gridlayout-root {
+        align-content: center;
+        justify-content: center;
+    }
+
+.title {
+    text-align: center;
+}
+
+.welcome-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: center;
+}
+
+.welcome-card {
+    width: 26.25rem;
+    height: 15rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 4px 6px -1px rgba(0, 0, 0, 0.1), 0px 2px 4px -2px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.2s;
+    border-radius: 1rem;
+    color: black;
+    gap: 1.5rem;
+    text-decoration: none;
+    position: relative;
+}
+
+    .welcome-card:hover {
+        box-shadow: 0px 20px 25px -5px rgba(0, 0, 0, 0.1), 0px 8px 10px -6px rgba(0, 0, 0, 0.1);
+    }
+
+    .welcome-card .welcome-card-img {
+        width: 6.5rem;
+        height: 6.5rem;
+    }
+
+    .welcome-card .welcome-card-text {
+        font-size: 1.75rem;
+        font-weight: 600;
+        letter-spacing: 0em;
+        text-align: center;
+        text-decoration: unset;
+    }
+
+    .welcome-card .welcome-card-back {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: #212529;
+        opacity: 0.05;
+        border-radius: 1rem;
+        z-index: -2;
+    }
+
+.title {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-bottom: 0.625rem;
+}
+
+    .title.title-secondary {
+        padding-top: 0.313rem;
+        padding-bottom: 0;
+        color: rgb(33, 37, 41);
+    }
+
+.title-header-text {
+    font-size: 2.5rem;
+    line-height: 3rem;
+    font-weight: 600;
+    letter-spacing: 0rem;
+    padding: 0.3125rem 0;
+}
+
+.title-content-text {
+    font-size: 1.75rem;
+    font-weight: 400;
+    line-height: 2.5rem;
+    letter-spacing: 0rem;
+}
+
+.main-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
 }
