@@ -3,9 +3,9 @@
 [![](https://img.shields.io/badge/📖_How_to_use_DevExpress_Examples-e9f6fc?style=flat-square)](https://docs.devexpress.com/GeneralInformation/403183)
 [![](https://img.shields.io/badge/💬_Leave_Feedback-feecdd?style=flat-square)](#does-this-example-address-your-development-requirementsobjectives)
 <!-- default badges end -->
-# Report Viewer and Data Grid for Blazor —  Integrate an AI Assistant based on Azure OpenAI
+# Report Viewer and Grid for Blazor —  Integrate an AI Assistant based on Azure OpenAI
 
-This example integrates an AI assistant into DevExpress Blazor Components. User requests and assistant responses are displayed on-screen using the [DevExpress Blazor AI Chat](http://docs.devexpress.com/Blazor/DevExpress.AIIntegration.Blazor.Chat.DxAIChat?v=24.2) component.
+This example integrates an AI assistant to DevExpress Blazor Components. User requests and assistant responses are displayed on-screen using the [DevExpress Blazor AI Chat](http://docs.devexpress.com/Blazor/DevExpress.AIIntegration.Blazor.Chat.DxAIChat?v=24.2) component.
 
 With an AI Assistant integrated in our AI-chat component, you can filter and manipulate data, generate document summaries, and ask context-aware questions about report content, table data, and more — all within the user interface. 
 
@@ -14,24 +14,28 @@ This example demonstrates the following DevExpress Blazor Components:
 - [Blazor Data Grid](https://www.devexpress.com/blazor/data-grid/)
 
     The Grid is bound to a project management data that tracks tasks or issues across various projects. It includes details like task subject, owner and assignee, status, priority, and key dates (created, modified, fixed). You can ask the AI Assistant questions about task data:      
-        - What tasks should the team focus on first? 
-        - How many tasks are currently marked as New? 
-        - What tasks are of the highest priority for Mike Roller?
+    - What tasks should the team focus on first? 
+    - How many tasks are currently marked as New? 
+    - What tasks are of the highest priority for Mike Roller?
+
+    Implementation details: [Add an AI Assistant to Blazor Grid](#add-an-ai-assistant-to-grid).
 
 - [Blazor Report Viewer](https://www.devexpress.com/subscriptions/reporting/)
 
     The Report Viewer presents multiple reports bound to different data sources. The available reports include:
 
     - The *Drill-Down Report* displays invoices where the expandable/collapsible sections list purchased products. You can ask the AI Assistant: Which invoice has the highest total order value? How many orders are currently in transit, pending, or delivered? What is the average order value per invoice?
-    - The *Market Share Report* includes sales figures, changes from the prior year, and current market share percentages for various regions and countries across different time periods. ou can ask the AI Assistant: Which region had the highest market share in September? How did market share change for India? How does Canada’s market share growth compare to the USA’s?
-    - The *Restaurant Menu* includes multiple groups, each group represents a different category and sub-category of meals and beverages. ou can ask the AI Assistant: What are the price ranges for the menu items? Are there any vegetarian or non-meat options on this menu?
+    - The *Market Share Report* includes sales figures, changes from the prior year, and current market share percentages for various regions and countries across different time periods. You can ask the AI Assistant: Which region had the highest market share in September? How did market share change for India? How does Canada’s market share growth compare to the USA’s?
+    - The *Restaurant Menu* includes multiple groups, each group represents a different category and sub-category of meals and beverages. You can ask the AI Assistant: What are the price ranges for the menu items? Are there any vegetarian or non-meat options on this menu?
 
-To navigate to page with the component, click in the corresponding card on the root page:
-
-![Cards](images/index-page.png)
+    Implementation details: [Add an AI Assistant to Blazor Report Viewer](#add-an-ai-assistant-to-report-viewer).
 
 >[!TIP]
 > Please note that AI Assistant initialization takes time. The assistant tab appears once Microsoft Azure scans the source document (i.e., grid or report data) on the server side.
+
+To navigate to a page with the component, click on the corresponding card on the root page:
+
+![Cards](images/index-page.png)
 
 ## Implementation Details
 
@@ -75,7 +79,7 @@ For more information on AI Assistants, refer to the following topic: [AI Service
 
 ### Add an AI Assistant to Grid
 
-The following image displays page with `DxGrid` and `DxAIChat` components implemented in this example:
+The following image displays a page with `DxGrid` and `DxAIChat` components implemented in this example:
 
 ![Blazor Grid and Integrated AI Assistant](images/data-grid.png)
 
