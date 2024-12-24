@@ -5,9 +5,13 @@
 <!-- default badges end -->
 # Report Viewer and Grid for Blazor —  Integrate an AI Assistant based on Azure OpenAI
 
-This example integrates an AI assistant to DevExpress Blazor Components. User requests and assistant responses are displayed on-screen using the [DevExpress Blazor AI Chat](http://docs.devexpress.com/Blazor/DevExpress.AIIntegration.Blazor.Chat.DxAIChat?v=24.2) component.
+This example integrates an AI assistant to DevExpress Blazor Components. User requests and assistant responses are displayed on-screen using the [DevExpress Blazor AI Chat](http://docs.devexpress.com/Blazor/DevExpress.AIIntegration.Blazor.Chat.DxAIChat?v=24.2) component. With an [Azure OpenAI Assistant](https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/assistant) integrated in our AI-chat component, you can filter and manipulate data, generate document summaries, and ask context-aware questions about report content, table data, and more — all within the user interface. 
 
-With an [Azure OpenAI Assistant](https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/assistant) integrated in our AI-chat component, you can filter and manipulate data, generate document summaries, and ask context-aware questions about report content, table data, and more — all within the user interface. 
+Common implementation steps include: 
+
+1. Register AI Services in the application.
+2. Add `DxAIChat` to the application.
+3. Export component data and pass it to the AI Assistant.
 
 This example showcases the following DevExpress Blazor Components:
 
@@ -32,7 +36,6 @@ This example showcases the following DevExpress Blazor Components:
 
 >[!TIP]
 > Please note that AI Assistant initialization takes time. The assistant tab appears once Microsoft Azure scans the source document (i.e., grid or report data) on the server side.
-
 
 ## Implementation Details
 
@@ -155,7 +158,7 @@ The following image displays Blazor Report Viewer UI implemented in this example
 
 ![Blazor Report Viewer and Integrated AI Assistant](images/report-viewer.png)
 
-#### Add a New Tab
+#### Add AI Assistant New Tab
 
 Use the [`OnCustomizeTabs`](https://docs.devexpress.com/XtraReports/DevExpress.Blazor.DxViewer.OnCustomizeTabs) event to add a new tab: 
 
