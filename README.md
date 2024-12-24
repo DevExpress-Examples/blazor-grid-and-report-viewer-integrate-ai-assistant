@@ -7,7 +7,7 @@
 
 This example integrates an AI assistant to DevExpress Blazor Components. User requests and assistant responses are displayed on-screen using the [DevExpress Blazor AI Chat](http://docs.devexpress.com/Blazor/DevExpress.AIIntegration.Blazor.Chat.DxAIChat?v=24.2) component.
 
-With an AI Assistant integrated in our AI-chat component, you can filter and manipulate data, generate document summaries, and ask context-aware questions about report content, table data, and more — all within the user interface. 
+With an [Azure OpenAI Assistant](https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/assistant) integrated in our AI-chat component, you can filter and manipulate data, generate document summaries, and ask context-aware questions about report content, table data, and more — all within the user interface. 
 
 This example demonstrates the following DevExpress Blazor Components:
 
@@ -24,18 +24,15 @@ This example demonstrates the following DevExpress Blazor Components:
 
     The Report Viewer presents multiple reports bound to different data sources. The available reports include:
 
-    - The *Drill-Down Report* displays invoices where the expandable/collapsible sections list purchased products. You can ask the AI Assistant: Which invoice has the highest total order value? How many orders are currently in transit, pending, or delivered? What is the average order value per invoice?
-    - The *Market Share Report* includes sales figures, changes from the prior year, and current market share percentages for various regions and countries across different time periods. You can ask the AI Assistant: Which region had the highest market share in September? How did market share change for India? How does Canada’s market share growth compare to the USA’s?
-    - The *Restaurant Menu* includes multiple groups, each group represents a different category and sub-category of meals and beverages. You can ask the AI Assistant: What are the price ranges for the menu items? Are there any vegetarian or non-meat options on this menu?
+    - The *Drill-Down Report* displays invoices where the expandable/collapsible sections list purchased products. You can ask the AI Assistant such as: Which invoice has the highest total order value? How many orders are currently in transit, pending, or delivered? What is the average order value per invoice?
+    - The *Market Share Report* includes sales figures, changes from the prior year, and current market share percentages for various regions and countries across different time periods. You can ask the AI Assistant such as: Which region had the highest market share in September? How did market share change for India? How does Canada’s market share growth compare to the USA’s?
+    - The *Restaurant Menu* includes multiple groups, each group represents a different category and sub-category of meals and beverages. You can ask the AI Assistant such as: What are the price ranges for the menu items? Are there any vegetarian or non-meat options on this menu?
 
     Implementation details: [Add an AI Assistant to Blazor Report Viewer](#add-an-ai-assistant-to-report-viewer).
 
 >[!TIP]
 > Please note that AI Assistant initialization takes time. The assistant tab appears once Microsoft Azure scans the source document (i.e., grid or report data) on the server side.
 
-To navigate to a page with the component, click on the corresponding card on the root page:
-
-![Cards](images/index-page.png)
 
 ## Implementation Details
 
@@ -43,10 +40,6 @@ To navigate to a page with the component, click on the corresponding card on the
 
 > [!NOTE]  
 > DevExpress AI-powered extensions follow the "bring your own key" principle. DevExpress does not offer a REST API and does not ship any built-in LLMs/SLMs. You need an active Azure/Open AI subscription to obtain the REST API endpoint, key, and model deployment name. These variables must be specified at application startup to register AI clients and enable DevExpress AI-powered Extensions in your application.
-
-Create an Azure OpenAI resource in the Azure portal to use AI Assistants. Refer to the following help topic for details: [Microsoft - Create and deploy an Azure OpenAI Service resource](https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/create-resource?pivots=web-portal). 
-
-Once you obtain a private endpoint and an API key, register them as `AZURE_OPENAI_ENDPOINT` and `AZURE_OPENAI_APIKEY` environment variables in your application.
 
 Add the following code to the *Program.cs* file to register the AI Services and an [OpenAI Assistant](https://platform.openai.com/docs/assistants/overview) in your application:
 
@@ -71,7 +64,7 @@ builder.Services.AddDevExpressAI((config) => {
 });
 ```
 
-For more information on AI Assistants, refer to the following topic: [AI Service Assistants in the DxAIChat component](https://docs.devexpress.com/Blazor/DevExpress.AIIntegration.Blazor.Chat.DxAIChat#ai-service-assistants).
+For more information on AI Assistants in `DxAIChat`, refer to the following topic: [AI Service Assistants in the DxAIChat component](https://docs.devexpress.com/Blazor/DevExpress.AIIntegration.Blazor.Chat.DxAIChat#ai-service-assistants).
 
 **Files to Review:**
 
@@ -111,7 +104,7 @@ The following code snippet adds the [`DxAIChat`](https://docs.devexpress.com/Bla
 }
 ```
 
-Use the [`MessageContentTemplate`](https://docs.devexpress.com/Blazor/DevExpress.AIIntegration.Blazor.Chat.DxAIChat.MessageContentTemplate) property to display any render fragment in a message bubble. For more information on appearance customization, refer to the following help document: [Customizable Message Appearance and Empty Message Area](https://docs.devexpress.com/Blazor/DevExpress.AIIntegration.Blazor.Chat.DxAIChat#customizable-message-appearance-and-empty-message-area). To display rich formatted messages, use a markdown processor to convert the response content to HTML code.
+Use the [`MessageContentTemplate`](https://docs.devexpress.com/Blazor/DevExpress.AIIntegration.Blazor.Chat.DxAIChat.MessageContentTemplate) property to display rich formatted messages. Use a markdown processor to convert the response content to HTML code.
 
 **Files to Review:**
 
@@ -162,8 +155,6 @@ The following image displays Blazor Report Viewer UI implemented in this example
 
 ![Blazor Report Viewer and Integrated AI Assistant](images/report-viewer.png)
 
-Use the [DxListBox](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxListBox-2) component to select a report and explore how different data is handled.
-
 #### Add a New Tab
 
 Use the [`OnCustomizeTabs`](https://docs.devexpress.com/XtraReports/DevExpress.Blazor.DxViewer.OnCustomizeTabs) event to add a new tab: 
@@ -194,7 +185,7 @@ Use the [`OnCustomizeTabs`](https://docs.devexpress.com/XtraReports/DevExpress.B
 }
 ```
 
-A new [`TabModel`](https://docs.devexpress.com/XtraReports/DevExpress.Blazor.Reporting.Models.TabModel._members) object is added to the list of tabs. The `UserAssistantTabContentModel` class implements the [`ITabContentModel`](https://docs.devexpress.com/XtraReports/DevExpress.Blazor.Reporting.Models.ITabContentModel) interface which defines the logic used to determine when the AI Assistant tab is displayed. The AI Assistant tab is only displayed when the report is initialized and contains at least one page.
+A new [`TabModel`](https://docs.devexpress.com/XtraReports/DevExpress.Blazor.Reporting.Models.TabModel._members) object is added to the list of tabs. The [`UserAssistantTabContentModel`](https://github.com/DevExpress-Examples/blazor-grid-and-report-viewer-integrate-ai-assistant/blob/24.2.3%2B/CS/DevExpress.AI.Samples.Blazor/Models/UserAssistantTabContentModel.cs#L6) class implements the [`ITabContentModel`](https://docs.devexpress.com/XtraReports/DevExpress.Blazor.Reporting.Models.ITabContentModel) interface which defines the logic used to determine when the AI Assistant tab is displayed. The AI Assistant tab is only displayed when the report is initialized and contains at least one page.
 
 The `TabTemplate` property specifies the content of the tab. It dynamically renders an `DxAIChat` component inside the tab and passes the `ContentModel` as a parameter to control the tab's content.
 
@@ -228,7 +219,7 @@ The content fot the AI Assistant tab is defined in the [AITabRenderer.razor](./D
 }
 ```
 
-Use the [`MessageContentTemplate`](https://docs.devexpress.com/Blazor/DevExpress.AIIntegration.Blazor.Chat.DxAIChat.MessageContentTemplate) property to display any render fragment in a message bubble. For more information on appearance customization, refer to the following help document: [Customizable Message Appearance and Empty Message Area](https://docs.devexpress.com/Blazor/DevExpress.AIIntegration.Blazor.Chat.DxAIChat#customizable-message-appearance-and-empty-message-area). To display rich formatted messages, use a markdown processor to convert the response content to HTML code.
+Use the [`MessageContentTemplate`](https://docs.devexpress.com/Blazor/DevExpress.AIIntegration.Blazor.Chat.DxAIChat.MessageContentTemplate) property to display rich formatted messages. Use a markdown processor to convert the response content to HTML code.
 
 **Files to Review:**
 
@@ -274,11 +265,11 @@ For information on OpenAI Assistants, refer to the following article: [Assistant
 ## Files to Review
 
 - [Program.cs](./DevExpress.AI.Samples.Blazor/Program.cs)
-- [ReportViewer.razor](./DevExpress.AI.Samples.Blazor/Components/Pages/ReportViewer.razor)
+- [Instructions.cs](./DevExpress.AI.Samples.Blazor/Instructions.cs)
 - [Grid.razor](./DevExpress.AI.Samples.Blazor/Components/Pages/Grid.razor)
+- [ReportViewer.razor](./DevExpress.AI.Samples.Blazor/Components/Pages/ReportViewer.razor)
 - [AITabRenderer.razor](./DevExpress.AI.Samples.Blazor/Components/Reporting/AITabRenderer.razor)
 - [UserAssistantTabContentModel.cs](./DevExpress.AI.Samples.Blazor/Models/UserAssistantTabContentModel.cs)
-- [Instructions.cs](./DevExpress.AI.Samples.Blazor/Instructions.cs)
 
 ## Documentation
 
@@ -290,9 +281,11 @@ For information on OpenAI Assistants, refer to the following article: [Assistant
 ## More Examples
 
 - [Reporting for Blazor - Integrate AI-powered Summarize and Translate Features based on Azure OpenAI](https://github.com/DevExpress-Examples/blazor-reporting-ai/)
+- [Reporting for ASP.NET Core - Integrate AI Assistant based on Azure OpenAI](https://github.com/DevExpress-Examples/web-reporting-integrate-ai-assistant)
 - [AI Chat for Blazor - How to add DxAIChat component in Blazor, MAUI, WPF, and WinForms applications](https://github.com/DevExpress-Examples/devexpress-ai-chat-samples)
 - [Rich Text Editor and HTML Editor for Blazor - How to integrate AI-powered extensions](https://github.com/DevExpress-Examples/blazor-ai-integration-to-text-editors)
 <!-- feedback -->
+
 ## Does this example address your development requirements/objectives?
 
 [<img src="https://www.devexpress.com/support/examples/i/yes-button.svg"/>](https://www.devexpress.com/support/examples/survey.xml?utm_source=github&utm_campaign=blazor-grid-and-report-viewer-integrate-ai-assistant&~~~was_helpful=yes) [<img src="https://www.devexpress.com/support/examples/i/no-button.svg"/>](https://www.devexpress.com/support/examples/survey.xml?utm_source=github&utm_campaign=blazor-grid-and-report-viewer-integrate-ai-assistant&~~~was_helpful=no)
