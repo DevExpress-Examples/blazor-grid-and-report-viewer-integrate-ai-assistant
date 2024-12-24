@@ -9,24 +9,24 @@ This example integrates an AI assistant to DevExpress Blazor Components. User re
 
 With an [Azure OpenAI Assistant](https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/assistant) integrated in our AI-chat component, you can filter and manipulate data, generate document summaries, and ask context-aware questions about report content, table data, and more — all within the user interface. 
 
-This example demonstrates the following DevExpress Blazor Components:
+This example showcases the following DevExpress Blazor Components:
 
-- [Blazor Data Grid](https://www.devexpress.com/blazor/data-grid/)
+- [Grid](https://www.devexpress.com/blazor/data-grid/)
 
-    The Grid is bound to a project management data that tracks tasks or issues across various projects. It includes details like task subject, owner and assignee, status, priority, and key dates (created, modified, fixed). You can ask the AI Assistant questions about task data:      
-    - What tasks should the team focus on first? 
-    - How many tasks are currently marked as New? 
-    - What tasks are of the highest priority for Mike Roller?
+    The Grid component displays project management data. You can use the AI Assistant to:
+    - Identify tasks to prioritize.
+    - Count tasks with a specific status.
+    - Filter tasks by owner or priority.
 
     Implementation details: [Add an AI Assistant to Blazor Grid](#add-an-ai-assistant-to-grid).
 
-- [Blazor Report Viewer](https://www.devexpress.com/subscriptions/reporting/)
+- [Report Viewer](https://www.devexpress.com/subscriptions/reporting/)
 
-    The Report Viewer presents multiple reports bound to different data sources. The available reports include:
+    The Report Viewer includes several reports bound to different data. Use the AI Assistant to interact with report data, for example:
 
-    - The *Drill-Down Report* displays invoices where the expandable/collapsible sections list purchased products. You can ask the AI Assistant such as: Which invoice has the highest total order value? How many orders are currently in transit, pending, or delivered? What is the average order value per invoice?
-    - The *Market Share Report* includes sales figures, changes from the prior year, and current market share percentages for various regions and countries across different time periods. You can ask the AI Assistant such as: Which region had the highest market share in September? How did market share change for India? How does Canada’s market share growth compare to the USA’s?
-    - The *Restaurant Menu* includes multiple groups, each group represents a different category and sub-category of meals and beverages. You can ask the AI Assistant such as: What are the price ranges for the menu items? Are there any vegetarian or non-meat options on this menu?
+    - *Drill-Down Report*: Analyze invoice totals, delivery statuses, and averages.
+    - *Market Share Report*: Compare market share changes across regions.
+    - *Restaurant Menu*: Examine price ranges and categorize vegetarian options.
 
     Implementation details: [Add an AI Assistant to Blazor Report Viewer](#add-an-ai-assistant-to-report-viewer).
 
