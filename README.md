@@ -5,9 +5,9 @@
 <!-- default badges end -->
 # Report Viewer and Grid for Blazor —  Integrate an AI Assistant based on Azure OpenAI
 
-This example integrates an AI assistant to DevExpress Blazor Components. User requests and assistant responses are displayed on-screen using the [DevExpress Blazor AI Chat](http://docs.devexpress.com/Blazor/DevExpress.AIIntegration.Blazor.Chat.DxAIChat?v=24.2) component. With an [Azure OpenAI Assistant](https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/assistant) integrated in our AI-chat component, you can filter and manipulate data, generate document summaries, and ask context-aware questions about report content, table data, and more — all within the user interface. 
+This example integrates a Copilot-inspired chat window (the [`DxAIChat`](http://docs.devexpress.com/Blazor/DevExpress.AIIntegration.Blazor.Chat.DxAIChat) component) to an application DevExpress Blazor Report Viewer and Blazor Grid. With an integrated [Azure OpenAI Assistant](https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/assistant), users can ask natural language questions to analyze data and obtain AI-powered insights from the displayed report document and/or data displayed in the grid.
 
-Common implementation steps include: 
+Key implementation steps of integrating `DxAIChat` include: 
 
 1. Register AI Services in the application.
 2. Add `DxAIChat` to the application.
@@ -35,7 +35,7 @@ This example showcases the following DevExpress Blazor Components:
     Implementation details: [Add an AI Assistant to Blazor Report Viewer](#add-an-ai-assistant-to-report-viewer).
 
 >[!TIP]
-> Please note that AI Assistant initialization takes time. The assistant tab appears once Microsoft Azure scans the source document (i.e., grid or report data) on the server side.
+> Please note that the Open AI Assistant initialization takes time. The `DxAIChat` appears once Microsoft Azure OpenAI service completes the scan of a source document (i.e., grid or report data).
 
 ## Implementation Details
 
@@ -67,7 +67,7 @@ builder.Services.AddDevExpressAI((config) => {
 });
 ```
 
-For more information on AI Assistants in `DxAIChat`, refer to the following topic: [AI Service Assistants in the DxAIChat component](https://docs.devexpress.com/Blazor/DevExpress.AIIntegration.Blazor.Chat.DxAIChat#ai-service-assistants).
+For more information on AI Assistants in `DxAIChat` and managing messages with custom RAG solutions, refer to the following topic: [AI Service Assistants in the DxAIChat component](https://docs.devexpress.com/Blazor/DevExpress.AIIntegration.Blazor.Chat.DxAIChat#ai-service-assistants).
 
 **Files to Review:**
 
@@ -277,6 +277,7 @@ For information on OpenAI Assistants, refer to the following article: [Assistant
 ## Documentation
 
 - [Blazor AI Chat](https://docs.devexpress.com/Blazor/DevExpress.AIIntegration.Blazor.Chat.DxAIChat)
+- [Demo: Blazor AI Chat](https://demos.devexpress.com/blazor/AI/Chat#Overview)
 - [Blazor Grid](https://docs.devexpress.com/Blazor/403143/components/grid)
 - [Blazor Report Viewer](https://docs.devexpress.com/XtraReports/403594/web-reporting/blazor-reporting/server/blazor-report-viewer-native)
 - [AI-powered Extensions for DevExpress Reporting](https://docs.devexpress.com/XtraReports/405211/ai-powered-functionality/ai-for-devexpress-reporting)
