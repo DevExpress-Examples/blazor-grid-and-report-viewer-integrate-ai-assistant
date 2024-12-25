@@ -34,8 +34,8 @@ This example showcases the following DevExpress Blazor Components:
 
     Implementation details: [Add an AI Assistant to Blazor Report Viewer](#add-an-ai-assistant-to-report-viewer).
 
->[!TIP]
-> Please note that the Open AI Assistant initialization takes time. The `DxAIChat` appears once Microsoft Azure OpenAI service completes the scan of a source document (i.e., grid or report data).
+>[!NOTE]
+> The Open AI Assistant initialization may take some time. The `DxAIChat` becomes ready to use once the Microsoft Azure OpenAI service completes the scan of the source document (i.e., grid or report data).
 
 ## Implementation Details
 
