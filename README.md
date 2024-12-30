@@ -5,37 +5,37 @@
 <!-- default badges end -->
 # Report Viewer and Grid for Blazor —  Integrate an AI Assistant based on Azure OpenAI
 
-This example integrates a Copilot-inspired chat window (the [`DxAIChat`](http://docs.devexpress.com/Blazor/DevExpress.AIIntegration.Blazor.Chat.DxAIChat) component) to an application DevExpress Blazor Report Viewer and Blazor Grid. With an integrated [Azure OpenAI Assistant](https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/assistant), users can ask natural language questions to analyze data and obtain AI-powered insights from the displayed report document and/or data displayed in the grid.
+This example adds a Copilot-inspired chat window (the [`DxAIChat`](http://docs.devexpress.com/Blazor/DevExpress.AIIntegration.Blazor.Chat.DxAIChat) component) to a Blazor application with DevExpress Report Viewer and Grid components. The chat utilizes an [Azure OpenAI Assistant](https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/assistant) to answer user questions based on information displayed in the report and/or data grid.
 
-Key implementation steps of integrating `DxAIChat` include: 
+To integrate an AI-powered chat into your application, complete the following key steps: 
 
 1. Register AI Services in the application.
-2. Add `DxAIChat` to the application.
+2. Add a `DxAIChat` component.
 3. Export component data and pass it to the AI Assistant.
 
-This example showcases the following DevExpress Blazor Components:
+This example uses the following DevExpress Blazor Components:
 
 - [Grid](https://www.devexpress.com/blazor/data-grid/)
 
     The Grid component displays project management data. You can use the AI Assistant to:
-    - Identify tasks to prioritize.
+    - Prioritize tasks.
     - Count tasks with a specific status.
     - Filter tasks by owner or priority.
 
-    Implementation details: [Add an AI Assistant to Blazor Grid](#add-an-ai-assistant-to-grid).
+    Implementation details: [Use an AI Assistant with the DevExpress Blazor Grid](#use-an-ai-assistant-with-the-devexpress-blazor-grid).
 
 - [Report Viewer](https://www.devexpress.com/subscriptions/reporting/)
 
-    The Report Viewer includes several reports bound to different data. Use the AI Assistant to interact with report data, for example:
+    The Report Viewer includes several reports bound to different data. Use the AI Assistant to interact with report data:
 
     - *Drill-Down Report*: Analyze invoice totals, delivery statuses, and averages.
     - *Market Share Report*: Compare market share changes across regions.
     - *Restaurant Menu*: Examine price ranges and categorize vegetarian options.
 
-    Implementation details: [Add an AI Assistant to Blazor Report Viewer](#add-an-ai-assistant-to-report-viewer).
+    Implementation details: [Use an AI Assistant with the DevExpress Blazor Report Viewer](#use-an-ai-assistant-with-the-devexpress-report-viewer).
 
 >[!NOTE]
-> The Open AI Assistant initialization may take some time. The `DxAIChat` becomes ready to use once the Microsoft Azure OpenAI service completes the scan of the source document (i.e., grid or report data).
+> Open AI Assistant initialization may take some time. `DxAIChat` is ready for use once the Microsoft Azure OpenAI service completes the source document scan. This example uses the following source documents: Excel file exported from the data grid and PDF file exported from the report viewer.
 
 ## Implementation Details
 
@@ -44,7 +44,7 @@ This example showcases the following DevExpress Blazor Components:
 > [!NOTE]  
 > DevExpress AI-powered extensions follow the "bring your own key" principle. DevExpress does not offer a REST API and does not ship any built-in LLMs/SLMs. You need an active Azure/Open AI subscription to obtain the REST API endpoint, key, and model deployment name. These variables must be specified at application startup to register AI clients and enable DevExpress AI-powered Extensions in your application.
 
-Add the following code to the *Program.cs* file to register the AI Services and an [OpenAI Assistant](https://platform.openai.com/docs/assistants/overview) in your application:
+Add the following code to the *Program.cs* file to register AI Services and an [OpenAI Assistant](https://platform.openai.com/docs/assistants/overview) in your application:
 
 ```cs
 using Azure.AI.OpenAI;
@@ -67,7 +67,7 @@ builder.Services.AddDevExpressAI((config) => {
 });
 ```
 
-For more information on AI Assistants in `DxAIChat` and managing messages with custom RAG solutions, refer to the following topic: [AI Service Assistants in the DxAIChat component](https://docs.devexpress.com/Blazor/DevExpress.AIIntegration.Blazor.Chat.DxAIChat#ai-service-assistants).
+For more information on the use of AI Assistants with `DxAIChat` and managing messages with custom RAG solutions, refer to the following topic: [AI Service Assistants in the DxAIChat component](https://docs.devexpress.com/Blazor/DevExpress.AIIntegration.Blazor.Chat.DxAIChat#ai-service-assistants).
 
 Note that the availability of Azure Open AI Assistants depends on the region. For more details, refer to the following article: [Azure OpenAI Service models -- Assistants (Preview)](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models?tabs=global-standard%2Cstandard-chat-completions#assistants-preview).
 
@@ -75,17 +75,17 @@ Note that the availability of Azure Open AI Assistants depends on the region. Fo
 
 - [Program.cs](./DevExpress.AI.Samples.Blazor/Program.cs)
 
-### Add an AI Assistant to Grid
+### Use an AI Assistant with the DevExpress Blazor Grid
 
-The following image displays a page with `DxGrid` and `DxAIChat` components implemented in this example:
+One page in this example displays `DxGrid` and `DxAIChat` components:
 
 ![Blazor Grid and Integrated AI Assistant](images/data-grid.png)
 
-For the `DxGrid` configuration (data binding and customizations), review the [Grid.razor](./DevExpress.AI.Samples.Blazor/Components/Pages/Grid.razor) file.
+For `DxGrid` configuration (data binding and customizations), review the following code file: [Grid.razor](./DevExpress.AI.Samples.Blazor/Components/Pages/Grid.razor).
 
 #### Add AI Chat to the Grid Page
 
-The following code snippet adds the [`DxAIChat`](https://docs.devexpress.com/Blazor/DevExpress.AIIntegration.Blazor.Chat.DxAIChat) to the page:
+The following code snippet adds the [`DxAIChat`](https://docs.devexpress.com/Blazor/DevExpress.AIIntegration.Blazor.Chat.DxAIChat) component to the page:
 
 ```razor
 @using DevExpress.AIIntegration.Blazor.Chat
@@ -109,7 +109,7 @@ The following code snippet adds the [`DxAIChat`](https://docs.devexpress.com/Bla
 }
 ```
 
-Use the [`MessageContentTemplate`](https://docs.devexpress.com/Blazor/DevExpress.AIIntegration.Blazor.Chat.DxAIChat.MessageContentTemplate) property to display rich formatted messages. Use a markdown processor to convert the response content to HTML code.
+Use the [`MessageContentTemplate`](https://docs.devexpress.com/Blazor/DevExpress.AIIntegration.Blazor.Chat.DxAIChat.MessageContentTemplate) property to display rich-formatted messages. Use a markdown processor to convert response content to HTML code.
 
 **Files to Review:**
 
@@ -117,7 +117,7 @@ Use the [`MessageContentTemplate`](https://docs.devexpress.com/Blazor/DevExpress
 
 #### Set Up the AI Assistant
 
-Handle the `OnAfterRenderAsync` event and call the [`SetupAssistantAsync`](https://docs.devexpress.com/Blazor/DevExpress.AIIntegration.Blazor.Chat.IAIChat.SetupAssistantAsync(DevExpress.AIIntegration.Services.Assistant.AIAssistantOptions)) method to create an AI assistant and provide it with data and instructions. In this example, grid data is exported to XLSX using the [`ExportToXlsxAsync`](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGrid.ExportToXlsxAsync.overloads) method and is passed to the assistant along with the instructions:
+Handle the `OnAfterRenderAsync` event and call the [`SetupAssistantAsync`](https://docs.devexpress.com/Blazor/DevExpress.AIIntegration.Blazor.Chat.IAIChat.SetupAssistantAsync(DevExpress.AIIntegration.Services.Assistant.AIAssistantOptions)) method to create an AI assistant and provide it with data and instructions. This example calls the grid's [`ExportToXlsxAsync`](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGrid.ExportToXlsxAsync.overloads) method to generate data for the AI Assistant. 
 
 ```razor
 @using DevExpress.AIIntegration.OpenAI.Services
@@ -160,7 +160,7 @@ The following image displays Blazor Report Viewer UI implemented in this example
 
 ![Blazor Report Viewer and Integrated AI Assistant](images/report-viewer.png)
 
-#### Add AI Assistant New Tab
+#### Add a New Tab for the AI Assistant
 
 Use the [`OnCustomizeTabs`](https://docs.devexpress.com/XtraReports/DevExpress.Blazor.DxViewer.OnCustomizeTabs) event to add a new tab: 
 
@@ -190,11 +190,11 @@ Use the [`OnCustomizeTabs`](https://docs.devexpress.com/XtraReports/DevExpress.B
 }
 ```
 
-A new [`TabModel`](https://docs.devexpress.com/XtraReports/DevExpress.Blazor.Reporting.Models.TabModel._members) object is added to the list of tabs. The [`UserAssistantTabContentModel`](https://github.com/DevExpress-Examples/blazor-grid-and-report-viewer-integrate-ai-assistant/blob/24.2.3%2B/CS/DevExpress.AI.Samples.Blazor/Models/UserAssistantTabContentModel.cs#L6) class implements the [`ITabContentModel`](https://docs.devexpress.com/XtraReports/DevExpress.Blazor.Reporting.Models.ITabContentModel) interface which defines the logic used to determine when the AI Assistant tab is displayed. The AI Assistant tab is only displayed when the report is initialized and contains at least one page.
+A new [`TabModel`](https://docs.devexpress.com/XtraReports/DevExpress.Blazor.Reporting.Models.TabModel._members) object is added to tab list. The [`UserAssistantTabContentModel`](https://github.com/DevExpress-Examples/blazor-grid-and-report-viewer-integrate-ai-assistant/blob/24.2.3%2B/CS/DevExpress.AI.Samples.Blazor/Models/UserAssistantTabContentModel.cs#L6) class implements the [`ITabContentModel`](https://docs.devexpress.com/XtraReports/DevExpress.Blazor.Reporting.Models.ITabContentModel) interface that specifies AI Assistant tab visibility. The tab is only visible when the report is initialized and contains at least one page.
 
-The `TabTemplate` property specifies the content of the tab. It dynamically renders an `DxAIChat` component inside the tab and passes the `ContentModel` as a parameter to control the tab's content.
+The `TabTemplate` property specifies the tab content. It dynamically renders an `DxAIChat` component inside the tab and passes the `ContentModel` as a parameter to control the tab's content.
 
-The content fot the AI Assistant tab is defined in the [AITabRenderer.razor](./DevExpress.AI.Samples.Blazor/Components/Reporting/AITabRenderer.razor) file: 
+The content for the AI Assistant tab is defined in the following file: [AITabRenderer.razor](./DevExpress.AI.Samples.Blazor/Components/Reporting/AITabRenderer.razor). 
 
 ```razor
 @using DevExpress.AI.Samples.Blazor.Models
@@ -224,7 +224,7 @@ The content fot the AI Assistant tab is defined in the [AITabRenderer.razor](./D
 }
 ```
 
-Use the [`MessageContentTemplate`](https://docs.devexpress.com/Blazor/DevExpress.AIIntegration.Blazor.Chat.DxAIChat.MessageContentTemplate) property to display rich formatted messages. Use a markdown processor to convert the response content to HTML code.
+Use the [`MessageContentTemplate`](https://docs.devexpress.com/Blazor/DevExpress.AIIntegration.Blazor.Chat.DxAIChat.MessageContentTemplate) property to display rich-formatted messages. Use a markdown processor to convert response content to HTML code.
 
 **Files to Review:**
 
@@ -234,7 +234,7 @@ Use the [`MessageContentTemplate`](https://docs.devexpress.com/Blazor/DevExpress
 
 #### Set Up the AI Assistant
 
-Handle the [`Initialized`](https://docs.devexpress.com/Blazor/DevExpress.AIIntegration.Blazor.Chat.DxAIChat.Initialized) event and call the [`SetupAssistantAsync`](https://docs.devexpress.com/Blazor/DevExpress.AIIntegration.Blazor.Chat.IAIChat.SetupAssistantAsync(DevExpress.AIIntegration.Services.Assistant.AIAssistantOptions)) method to create an AI assistant and provide it with data and instructions. In this example, report data is exported to PDF using the [`ExportToPdf`](https://docs.devexpress.com/CoreLibraries/DevExpress.XtraPrinting.PrintingSystemBase.ExportToPdf(System.IO.Stream)) method and is passed to the assistant along with the instructions:
+Handle the [`Initialized`](https://docs.devexpress.com/Blazor/DevExpress.AIIntegration.Blazor.Chat.DxAIChat.Initialized) event and call the [`SetupAssistantAsync`](https://docs.devexpress.com/Blazor/DevExpress.AIIntegration.Blazor.Chat.IAIChat.SetupAssistantAsync(DevExpress.AIIntegration.Services.Assistant.AIAssistantOptions)) method to create an AI assistant and provide it with data and instructions. This example calls the [`ExportToPdf`](https://docs.devexpress.com/CoreLibraries/DevExpress.XtraPrinting.PrintingSystemBase.ExportToPdf(System.IO.Stream)) method to generate data for the AI Assistant:
 
 ```razor
 @using DevExpress.AIIntegration.Blazor.Chat
