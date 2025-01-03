@@ -67,7 +67,7 @@ builder.Services.AddDevExpressAI((config) => {
 });
 ```
 
-For more information on the use of AI Assistants with `DxAIChat` and managing messages with custom RAG solutions, refer to the following topic: [AI Service Assistants in the DxAIChat component](https://docs.devexpress.com/Blazor/DevExpress.AIIntegration.Blazor.Chat.DxAIChat#ai-service-assistants).
+For more information on the use of AI Assistants with `DxAIChat` and managing messages with custom RAG (Retrieval-Augmented Generation) solutions, refer to the following topic: [AI Service Assistants in the DxAIChat component](https://docs.devexpress.com/Blazor/DevExpress.AIIntegration.Blazor.Chat.DxAIChat#ai-service-assistants).
 
 Note that the availability of Azure Open AI Assistants depends on the region. For more details, refer to the following article: [Azure OpenAI Service models -- Assistants (Preview)](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models?tabs=global-standard%2Cstandard-chat-completions#assistants-preview).
 
@@ -154,13 +154,13 @@ For information on OpenAI Assistants, refer to the following article: [Assistant
 - [Grid.razor](./DevExpress.AI.Samples.Blazor/Components/Pages/Grid.razor)
 - [Instructions.cs](./DevExpress.AI.Samples.Blazor/Instructions.cs)
 
-### Add an AI Assistant to Report Viewer
+### Add AI Assistant to Report Viewer
 
-The following image displays Blazor Report Viewer UI implemented in this example. The AI Assistant tab uses the `DxAIChat` component to display requests and responses:
+The following image displays the Blazor Report Viewer UI implemented in this example. The AI Assistant tab uses the `DxAIChat` component to display requests and responses:
 
 ![Blazor Report Viewer and Integrated AI Assistant](images/report-viewer.png)
 
-#### Add a New Tab for the AI Assistant
+#### Add New Tab for AI Assistant
 
 Use the [`OnCustomizeTabs`](https://docs.devexpress.com/XtraReports/DevExpress.Blazor.DxViewer.OnCustomizeTabs) event to add a new tab: 
 
@@ -190,9 +190,9 @@ Use the [`OnCustomizeTabs`](https://docs.devexpress.com/XtraReports/DevExpress.B
 }
 ```
 
-A new [`TabModel`](https://docs.devexpress.com/XtraReports/DevExpress.Blazor.Reporting.Models.TabModel._members) object is added to tab list. The [`UserAssistantTabContentModel`](https://github.com/DevExpress-Examples/blazor-grid-and-report-viewer-integrate-ai-assistant/blob/24.2.3%2B/CS/DevExpress.AI.Samples.Blazor/Models/UserAssistantTabContentModel.cs#L6) class implements the [`ITabContentModel`](https://docs.devexpress.com/XtraReports/DevExpress.Blazor.Reporting.Models.ITabContentModel) interface that specifies AI Assistant tab visibility. The tab is only visible when the report is initialized and contains at least one page.
+A new [`TabModel`](https://docs.devexpress.com/XtraReports/DevExpress.Blazor.Reporting.Models.TabModel._members) object is added to the tab list. The [`UserAssistantTabContentModel`](https://github.com/DevExpress-Examples/blazor-grid-and-report-viewer-integrate-ai-assistant/blob/24.2.3%2B/CS/DevExpress.AI.Samples.Blazor/Models/UserAssistantTabContentModel.cs#L6) class implements the [`ITabContentModel`](https://docs.devexpress.com/XtraReports/DevExpress.Blazor.Reporting.Models.ITabContentModel) interface that specifies AI Assistant tab visibility. The tab is only visible when the report is initialized and contains at least one page.
 
-The `TabTemplate` property specifies the tab content. It dynamically renders an `DxAIChat` component inside the tab and passes the `ContentModel` as a parameter to control the tab's content.
+The `TabTemplate` property specifies the tab content. It dynamically renders the `DxAIChat` component inside the tab and passes the `ContentModel` as a parameter to control the tab's content.
 
 The content for the AI Assistant tab is defined in the following file: [AITabRenderer.razor](./DevExpress.AI.Samples.Blazor/Components/Reporting/AITabRenderer.razor). 
 
