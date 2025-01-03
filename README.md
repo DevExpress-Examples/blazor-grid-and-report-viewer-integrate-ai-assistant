@@ -154,7 +154,7 @@ For information on OpenAI Assistants, refer to the following article: [Assistant
 - [Grid.razor](./DevExpress.AI.Samples.Blazor/Components/Pages/Grid.razor)
 - [Instructions.cs](./DevExpress.AI.Samples.Blazor/Instructions.cs)
 
-### Add AI Assistant to Report Viewer
+###  Use an AI Assistant with the DevExpress Blazor Report Viewer
 
 The following image displays the Blazor Report Viewer UI implemented in this example. The AI Assistant tab uses the `DxAIChat` component to display requests and responses:
 
