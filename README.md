@@ -76,7 +76,7 @@ For additional information on the use of AI Assistants with `DxAIChat` and manag
 
 **Files to Review:**
 
-- [Program.cs](./DevExpress.AI.Samples.Blazor/Program.cs)
+- [Program.cs](./CS/DevExpress.AI.Samples.Blazor/Program.cs)
 
 ### Use an AI Assistant with the DevExpress Blazor Grid
 
@@ -84,7 +84,7 @@ This example includes a page with both the DevExpress Blazor Grid (`DxGrid`) and
 
 ![Blazor Grid and Integrated AI Assistant](images/data-grid.png)
 
-To configure our Blazor Grid (data binding and customizations), review the following code file: [Grid.razor](./DevExpress.AI.Samples.Blazor/Components/Pages/Grid.razor).
+To configure our Blazor Grid (data binding and customizations), review the following code file: [Grid.razor](./CS/DevExpress.AI.Samples.Blazor/Components/Pages/Grid.razor).
 
 #### Add AI Chat to the Grid Page
 
@@ -116,7 +116,7 @@ Use the [`MessageContentTemplate`](https://docs.devexpress.com/Blazor/DevExpress
 
 **Files to Review:**
 
-- [Grid.razor](./DevExpress.AI.Samples.Blazor/Components/Pages/Grid.razor)
+- [Grid.razor](./CS/DevExpress.AI.Samples.Blazor/Components/Pages/Grid.razor)
 
 #### Set Up the AI Assistant
 
@@ -148,14 +148,14 @@ Handle the `OnAfterRenderAsync` event and call the [`SetupAssistantAsync`](https
 }
 ```
 
-You can review and tailor AI assistant instructions in the following file: [Instructions.cs](./DevExpress.AI.Samples.Blazor/Instructions.cs).
+You can review and tailor AI assistant instructions in the following file: [Instructions.cs](./CS/DevExpress.AI.Samples.Blazor/Instructions.cs).
 
 For information on OpenAI Assistants, refer to the following document: [Assistants API overview](https://platform.openai.com/docs/assistants/overview).
 
 **Files to Review:**
 
-- [Grid.razor](./DevExpress.AI.Samples.Blazor/Components/Pages/Grid.razor)
-- [Instructions.cs](./DevExpress.AI.Samples.Blazor/Instructions.cs)
+- [Grid.razor](./CS/DevExpress.AI.Samples.Blazor/Components/Pages/Grid.razor)
+- [Instructions.cs](./CS/DevExpress.AI.Samples.Blazor/Instructions.cs)
 
 ###  Add an AI Assistant to the DevExpress Blazor Report Viewer
 
@@ -197,7 +197,7 @@ A new [`TabModel`](https://docs.devexpress.com/XtraReports/DevExpress.Blazor.Rep
 
 The `TabTemplate` property specifies tab content. It dynamically renders the `DxAIChat` component inside the tab and passes `ContentModel` as a parameter to control tab content.
 
-The content for the AI Assistant tab is defined in the following file: [AITabRenderer.razor](./DevExpress.AI.Samples.Blazor/Components/Reporting/AITabRenderer.razor). 
+The content for the AI Assistant tab is defined in the following file: [AITabRenderer.razor](./CS/DevExpress.AI.Samples.Blazor/Components/Reporting/AITabRenderer.razor). 
 
 ```razor
 @using DevExpress.AI.Samples.Blazor.Models
@@ -231,9 +231,9 @@ Use the [`MessageContentTemplate`](https://docs.devexpress.com/Blazor/DevExpress
 
 **Files to Review:**
 
-- [ReportViewer.razor](./DevExpress.AI.Samples.Blazor/Components/Pages/ReportViewer.razor)
-- [AITabRenderer.razor](./DevExpress.AI.Samples.Blazor/Components/Reporting/AITabRenderer.razor)
-- [UserAssistantTabContentModel.cs](./DevExpress.AI.Samples.Blazor/Models/UserAssistantTabContentModel.cs)
+- [ReportViewer.razor](./CS/DevExpress.AI.Samples.Blazor/Components/Pages/ReportViewer.razor)
+- [AITabRenderer.razor](./CS/DevExpress.AI.Samples.Blazor/Components/Reporting/AITabRenderer.razor)
+- [UserAssistantTabContentModel.cs](./CS/DevExpress.AI.Samples.Blazor/Models/UserAssistantTabContentModel.cs)
 
 #### Set Up the AI Assistant
 
@@ -259,25 +259,25 @@ Handle the [`Initialized`](https://docs.devexpress.com/Blazor/DevExpress.AIInteg
 }
 ```
 
-You can review and tailor AI assistant instructions in the following file: [Instructions.cs](./DevExpress.AI.Samples.Blazor/Instructions.cs).
+You can review and tailor AI assistant instructions in the following file: [Instructions.cs](./CS/DevExpress.AI.Samples.Blazor/Instructions.cs).
 
 For information on OpenAI Assistants, refer to the following article: [Assistants API overview](https://platform.openai.com/docs/assistants/overview).
 
 **Files to Review:**
 
-- [ReportViewer.razor](./DevExpress.AI.Samples.Blazor/Components/Pages/ReportViewer.razor)
-- [AITabRenderer.razor](./DevExpress.AI.Samples.Blazor/Components/Reporting/AITabRenderer.razor)
-- [UserAssistantTabContentModel.cs](./DevExpress.AI.Samples.Blazor/Models/UserAssistantTabContentModel.cs)
-- [Instructions.cs](./DevExpress.AI.Samples.Blazor/Instructions.cs)
+- [ReportViewer.razor](./CS/DevExpress.AI.Samples.Blazor/Components/Pages/ReportViewer.razor)
+- [AITabRenderer.razor](./CS/DevExpress.AI.Samples.Blazor/Components/Reporting/AITabRenderer.razor)
+- [UserAssistantTabContentModel.cs](./CS/DevExpress.AI.Samples.Blazor/Models/UserAssistantTabContentModel.cs)
+- [Instructions.cs](./CS/DevExpress.AI.Samples.Blazor/Instructions.cs)
 
 ## Files to Review
 
-- [Program.cs](./DevExpress.AI.Samples.Blazor/Program.cs)
-- [Instructions.cs](./DevExpress.AI.Samples.Blazor/Instructions.cs)
-- [Grid.razor](./DevExpress.AI.Samples.Blazor/Components/Pages/Grid.razor)
-- [ReportViewer.razor](./DevExpress.AI.Samples.Blazor/Components/Pages/ReportViewer.razor)
-- [AITabRenderer.razor](./DevExpress.AI.Samples.Blazor/Components/Reporting/AITabRenderer.razor)
-- [UserAssistantTabContentModel.cs](./DevExpress.AI.Samples.Blazor/Models/UserAssistantTabContentModel.cs)
+- [Program.cs](./CS/DevExpress.AI.Samples.Blazor/Program.cs)
+- [Instructions.cs](./CS/DevExpress.AI.Samples.Blazor/Instructions.cs)
+- [Grid.razor](./CS/DevExpress.AI.Samples.Blazor/Components/Pages/Grid.razor)
+- [ReportViewer.razor](./CS/DevExpress.AI.Samples.Blazor/Components/Pages/ReportViewer.razor)
+- [AITabRenderer.razor](./CS/DevExpress.AI.Samples.Blazor/Components/Reporting/AITabRenderer.razor)
+- [UserAssistantTabContentModel.cs](./CS/DevExpress.AI.Samples.Blazor/Models/UserAssistantTabContentModel.cs)
 
 ## Documentation
 
