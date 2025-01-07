@@ -34,7 +34,7 @@ The following DevExpress Blazor Components were used in this sample project:
     - *Market Share Report*: Compare market share changes across regions.
     - *Restaurant Menu*: Examine price range and categorize vegetarian options. 
 
-    Implementation details: [Add an AI Assistant to the DevExpress Blazor Report Viewer](#add-an-ai-assistant-to-the-devexpress-report-viewer).
+    Implementation details: [Add an AI Assistant to the DevExpress Blazor Report Viewer](#add-an-ai-assistant-to-the-devexpress-blazor-report-viewer).
 
 >[!NOTE]
 > Open AI Assistant initialization may take time. `DxAIChat` is ready for use once Microsoft Azure OpenAI completes its source document scan.
