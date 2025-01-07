@@ -6,14 +6,6 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <EmitLegacyAssetsFileItems>True</EmitLegacyAssetsFileItems>
   </PropertyGroup>
-
-  <ItemGroup>
-    <None Remove="Data\Example.docx" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="Data\Example.docx" />
-  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Azure.AI.OpenAI" Version="2.1.0-beta.2" />
     <PackageReference Include="Azure.AI.OpenAI.Assistants" Version="1.0.0-beta.4" />

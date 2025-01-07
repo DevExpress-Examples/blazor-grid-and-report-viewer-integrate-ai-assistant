@@ -1,9 +1,9 @@
 ﻿@page "/grid"
-@page "/"
 @using DevExpress.AI.Samples.Blazor.Data;
 @using DevExpress.AI.Samples.Blazor.Services
 @using DevExpress.AIIntegration.Blazor.Chat
 @using DevExpress.AIIntegration.OpenAI.Services
+@using Markdig
 
 @inject IssuesDataService IssuesDataService
 
@@ -83,7 +83,7 @@
     IGrid grid;
     IAIChat chat;
     MarkupString ToHtml(string text) {
-        return (MarkupString)Markdig.Markdown.ToHtml(text);
+        return (MarkupString)Markdown.ToHtml(text);
     }
     IEnumerable<Issue> DataSource { get; set; }
     IEnumerable<Project> ProjectList { get; set; }
@@ -121,17 +121,17 @@
         return new MarkupString(html);
     }
     public MarkupString GetIssuePriorityIconHtml(IssuePriority priority) {
-        string priorytyClass = "warning";
+        string priorityClass = "warning";
         string title = "Medium";
         if(priority == IssuePriority.High) {
-            priorytyClass = "danger";
+            priorityClass = "danger";
             title = " High ";
         }
         if(priority == IssuePriority.Low) {
-            priorytyClass = "info";
+            priorityClass = "info";
             title = " Low ";
         }
-        string html = string.Format("<span class='badge priority-{0} py-1 px-2' title='{1} Priority'>{1}</span>", priorytyClass,
+        string html = string.Format("<span class='badge priority-{0} py-1 px-2' title='{1} Priority'>{1}</span>", priorityClass,
         title);
         return new MarkupString(html);
     }
