@@ -16,7 +16,7 @@
 @code {
     [Parameter] public UserAssistantTabContentModel Model { get; set; }
     string ClearAnnotations(string text) {
-    //To clear out the annotations in a response from assistant.
+    //To clear out annotations in a response from the assistant.
         return Regex.Replace(text, @"\【.*?】", "");
     }
     
