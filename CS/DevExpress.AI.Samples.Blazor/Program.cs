@@ -22,11 +22,10 @@ var azureClient = new AzureOpenAIClient(
     new ApiKeyCredential(azureOpenAIKey));
 
 builder.Services.AddDevExpressBlazor();
-builder.Services.AddChatClient(config => 
-    config.Use(azureClient.AsChatClient(deploymentName))
-);
 builder.Services.AddDevExpressServerSideBlazorReportViewer();
+builder.Services.AddChatClient(azureClient.AsChatClient(deploymentName));
 builder.Services.AddDevExpressAI((config) => {
+    //Reference the DevExpress.AIIntegration.OpenAI NuGet package to use Open AI Asisstants
     config.RegisterOpenAIAssistants(azureClient, deploymentName); 
 });
 builder.Services.AddSingleton<IDemoReportSource, DemoReportSource>();

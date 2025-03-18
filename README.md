@@ -36,8 +36,10 @@ The following DevExpress Blazor Components were used in this sample project:
 
     Implementation details: [Add an AI Assistant to the DevExpress Blazor Report Viewer](#add-an-ai-assistant-to-the-devexpress-blazor-report-viewer).
 
->[!NOTE]
-> Open AI Assistant initialization may take time. `DxAIChat` is ready for use once Microsoft Azure OpenAI completes its source document scan.
+Open AI Assistant initialization may take time. `DxAIChat` is ready for use once Microsoft Azure OpenAI completes its source document scan.
+
+> [!Important]
+> We use version **9.3.0-preview.1.25161.3** of the _Microsoft.Extensions.AI.*_ libraries in our source code. We do not guarantee compatibility or correct operation with higher versions.
 
 ## Implementation Details
 
