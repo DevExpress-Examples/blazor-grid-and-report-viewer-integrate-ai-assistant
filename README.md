@@ -63,9 +63,7 @@ string deploymentName = "YOUR_MODEL_NAME";
 var azureClient = new AzureOpenAIClient(
     new Uri(azureOpenAIEndpoint),
     new ApiKeyCredential(azureOpenAIKey));
-builder.Services.AddChatClient(config => 
-    config.Use(azureClient.AsChatClient(deploymentName))
-);
+builder.Services.AddChatClient(azureClient.AsChatClient(deploymentName));
 builder.Services.AddDevExpressAI((config) => {
     config.RegisterOpenAIAssistants(azureClient, deploymentName); 
 });
