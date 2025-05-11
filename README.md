@@ -41,9 +41,9 @@ Open AI Assistant initialization may take time. `DxAIChat` is ready for use once
 > [!Note]
 > We use the following versions of the `Microsoft.Extensions.AI.*` libraries in our source code:
 >
-> v24.2.6+ | **9.3.0-preview.1.25161.3**
+> v25.1.2+ | **9.4.3-preview.1.25230.7**
 >
-> We do not guarantee compatibility or correct operation with higher versions. Refer to the following announcement for additional information: [Microsoft.Extensions.AI.Abstractions NuGet Package Version Upgrade in v24.2.6](https://community.devexpress.com/blogs/news/archive/2025/03/12/important-announcement-microsoft-extensions-ai-abstractions-nuget-package-version-upgrade.aspx).
+> We do not guarantee compatibility or correct operation with higher versions.
 
 ## Implementation Details
 
