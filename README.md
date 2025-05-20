@@ -64,12 +64,15 @@ string azureOpenAIEndpoint = "AZURE_OPENAI_ENDPOINT";
 string azureOpenAIKey = "AZURE_OPENAI_API_KEY";
 string deploymentName = "YOUR_MODEL_NAME";
 //...
-var azureClient = new AzureOpenAIClient(
+var azureOpenAIClient = new AzureOpenAIClient(
     new Uri(azureOpenAIEndpoint),
     new ApiKeyCredential(azureOpenAIKey));
-builder.Services.AddChatClient(azureClient.AsChatClient(deploymentName));
+
+var chatClient = azureOpenAIClient.GetChatClient(deploymentName).AsIChatClient();
+builder.Services.AddChatClient(chatClient);
 builder.Services.AddDevExpressAI((config) => {
-    config.RegisterOpenAIAssistants(azureClient, deploymentName); 
+    //Reference the DevExpress.AIIntegration.OpenAI NuGet package to use Open AI Asisstants
+    config.RegisterOpenAIAssistants(azureOpenAIClient, deploymentName); 
 });
 ```
 
