@@ -1,9 +1,11 @@
 ﻿@using DevExpress.AI.Samples.Blazor.Models
+@using DevExpress.AI.Samples.Blazor.Services
 @using DevExpress.AIIntegration.Blazor.Chat
 @using System.Text.RegularExpressions
 @using DevExpress.AIIntegration.OpenAI.Services
 @using Markdig
 
+@inject AIAssistantCreator assistantCreator;
 
 <DxAIChat CssClass="my-report-chat" Initialized="ChatInitialized">
     <MessageContentTemplate>
@@ -16,10 +18,10 @@
 @code {
     [Parameter] public UserAssistantTabContentModel Model { get; set; }
     string ClearAnnotations(string text) {
-    //To clear out annotations in a response from the assistant.
+        //To clear out annotations in a response from the assistant.
         return Regex.Replace(text, @"\【.*?】", "");
     }
-    
+
     MarkupString ToHtml(string text) {
         text = ClearAnnotations(text);
         return (MarkupString)Markdown.ToHtml(text);
@@ -27,9 +29,8 @@
 
     async Task ChatInitialized(IAIChat aIChat) {
         using (MemoryStream ms = Model.GetReportData()) {
-            await aIChat.SetupAssistantAsync(new OpenAIAssistantOptions("report.pdf", ms) {
-                Instructions = AssistantHelper.GetAIAssistantInstructions("pdf")
-            });
+            (string assistantId, string threadId) = await assistantCreator.CreateAssistantAsync(ms, "report.pdf", AssistantHelper.GetAIAssistantInstructions("pdf"));
+            await aIChat.SetupAssistantAsync(assistantId, threadId);
         }
     }
 }
