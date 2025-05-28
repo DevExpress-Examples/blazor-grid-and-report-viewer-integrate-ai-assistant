@@ -6,6 +6,7 @@
 @using Markdig
 
 @inject IssuesDataService IssuesDataService
+@inject AIAssistantCreator assistantCreator;
 
 <DxGrid @ref="grid" Data="@DataSource" CssClass="my-grid" ShowGroupPanel="true" TextWrapEnabled="false" AutoExpandAllGroupRows="true"
         CustomizeFilterRowEditor="Grid_CustomizeFilterRowEditor" FilterMenuButtonDisplayMode="GridFilterMenuButtonDisplayMode.Always"
@@ -153,10 +154,10 @@
                 await grid.ExportToXlsxAsync(ms, new GridXlExportOptions() {
                         ExportDisplayText = true
                     });
-                await chat.SetupAssistantAsync(new OpenAIAssistantOptions("grid_data.xlsx", ms) {
-                    Instructions = AssistantHelper.GetAIAssistantInstructions("xlsx"),
-                    UseFileSearchTool = false
-                });
+
+                (string assistantId, string threadId) = await assistantCreator.CreateAssistantAsync(ms, "grid_data.xlsx", AssistantHelper.GetAIAssistantInstructions("xlsx"), false);
+                await chat.SetupAssistantAsync(assistantId, threadId);
+
                 grid.ShowGroupedColumns = false;
                 grid.EndUpdate();
             }

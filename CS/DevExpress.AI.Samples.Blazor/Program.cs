@@ -23,6 +23,8 @@ var azureOpenAIClient = new AzureOpenAIClient(
 
 var chatClient = azureOpenAIClient.GetChatClient(deploymentName).AsIChatClient();
 
+var assistantCreator = new AIAssistantCreator(azureOpenAIClient, deploymentName);
+
 builder.Services.AddDevExpressBlazor();
 builder.Services.AddDevExpressServerSideBlazorReportViewer();
 builder.Services.AddChatClient(chatClient);
@@ -30,6 +32,7 @@ builder.Services.AddDevExpressAI((config) => {
     //Reference the DevExpress.AIIntegration.OpenAI NuGet package to use Open AI Asisstants
     config.RegisterOpenAIAssistants(azureOpenAIClient, deploymentName); 
 });
+builder.Services.AddSingleton(assistantCreator);
 builder.Services.AddSingleton<IDemoReportSource, DemoReportSource>();
 builder.Services.AddDbContextFactory<IssuesContext>(opt => {
     opt.UseSqlite(builder.Configuration.GetConnectionString("IssuesConnectionString"));
