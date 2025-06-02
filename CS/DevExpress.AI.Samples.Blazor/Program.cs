@@ -29,7 +29,7 @@ builder.Services.AddDevExpressBlazor();
 builder.Services.AddDevExpressServerSideBlazorReportViewer();
 builder.Services.AddChatClient(chatClient);
 builder.Services.AddDevExpressAI((config) => {
-    //Reference the DevExpress.AIIntegration.OpenAI NuGet package to use Open AI Asisstants
+    //Reference the DevExpress.AIIntegration.OpenAI NuGet package to use Open AI Assistants
     config.RegisterOpenAIAssistants(azureOpenAIClient, deploymentName); 
 });
 builder.Services.AddSingleton(assistantCreator);

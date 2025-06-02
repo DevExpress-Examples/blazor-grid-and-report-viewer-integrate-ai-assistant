@@ -5,7 +5,7 @@
 @using DevExpress.AIIntegration.OpenAI.Services
 @using Markdig
 
-@inject AIAssistantCreator assistantCreator;
+@inject AIAssistantCreator assistantCreator
 
 <DxAIChat CssClass="my-report-chat" Initialized="ChatInitialized">
     <MessageContentTemplate>
@@ -29,7 +29,11 @@
 
     async Task ChatInitialized(IAIChat aIChat) {
         using (MemoryStream ms = Model.GetReportData()) {
-            (string assistantId, string threadId) = await assistantCreator.CreateAssistantAsync(ms, "report.pdf", AssistantHelper.GetAIAssistantInstructions("pdf"));
+            (string assistantId, string threadId) = await assistantCreator.CreateAssistantAsync(
+                ms, 
+                "report.pdf", 
+                AssistantHelper.GetAIAssistantInstructions("pdf")
+            );
             await aIChat.SetupAssistantAsync(assistantId, threadId);
         }
     }
