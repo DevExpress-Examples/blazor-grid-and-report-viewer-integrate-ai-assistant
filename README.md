@@ -121,7 +121,7 @@ The following code snippet adds the [`DxAIChat`](https://docs.devexpress.com/Bla
 }
 ```
 
-Use the [`MessageContentTemplate`](https://docs.devexpress.com/Blazor/DevExpress.AIIntegration.Blazor.Chat.DxAIChat.MessageContentTemplate) property to display rich-formatted messages. Use a markdown processor to convert response content to HTML code. 
+Use the [`MessageContentTemplate`](https://docs.devexpress.com/Blazor/DevExpress.AIIntegration.Blazor.Chat.DxAIChat.MessageContentTemplate) property to display rich-formatted messages. Use a markdown processor to convert response content to HTML code.
 
 **Files to Review:**
 
@@ -164,7 +164,7 @@ Handle the `OnAfterRenderAsync` event and call the [`SetupAssistantAsync`](https
 
 ```razor
 @using DevExpress.AIIntegration.OpenAI.Services
-@inject AIAssistantCreator assistantCreator;
+@inject AIAssistantCreator assistantCreator
 
 @* ... *@
 @code {
@@ -308,11 +308,6 @@ builder.Services.AddSingleton(assistantCreator);
 - [Program.cs](./CS/DevExpress.AI.Samples.Blazor/Program.cs)
 
 
-**Files to Review:**
-
-- [AIAssistantCreator.cs](./CS/DevExpress.AI.Samples.Blazor/Services/AIAssistantCreator.cs)
-- [Instructions.cs](./CS/DevExpress.AI.Samples.Blazor/Instructions.cs)
-- [Program.cs](./CS/DevExpress.AI.Samples.Blazor/Program.cs)
 
 #### Set Up the AI Assistant
 
