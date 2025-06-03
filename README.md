@@ -130,8 +130,6 @@ Use the [`MessageContentTemplate`](https://docs.devexpress.com/Blazor/DevExpress
 
 In this example, the `AIAssistantCreator.CreateAssistantAsync` method uploads a file to OpenAI, configures tool resources, creates an assistant with specified instructions and tools, initializes a new thread, and returns the assistant and thread IDs.
 
-You can review and tailor AI assistant instructions in the following file: [Instructions.cs](./CS/DevExpress.AI.Samples.Blazor/Instructions.cs).
-
 For information on OpenAI Assistants, refer to the following documents: 
 - [OpenAI Assistants API overview](https://platform.openai.com/docs/assistants/overview)
 - [Azure OpenAI: OpenAI Assistants client library for .NET](https://learn.microsoft.com/en-us/dotnet/api/overview/azure/ai.openai.assistants-readme?view=azure-dotnet-preview)
@@ -279,8 +277,6 @@ Use the [`MessageContentTemplate`](https://docs.devexpress.com/Blazor/DevExpress
 
 In this example, the `AIAssistantCreator.CreateAssistantAsync` method uploads a file to OpenAI, configures tool resources, creates an assistant with specified instructions and tools, initializes a new thread, and returns the assistant and thread IDs.
 
-You can review and tailor AI assistant instructions in the following file: [Instructions.cs](./CS/DevExpress.AI.Samples.Blazor/Instructions.cs).
-
 For information on OpenAI Assistants, refer to the following documents: 
 - [OpenAI Assistants API overview](https://platform.openai.com/docs/assistants/overview)
 - [Azure OpenAI: OpenAI Assistants client library for .NET](https://learn.microsoft.com/en-us/dotnet/api/overview/azure/ai.openai.assistants-readme?view=azure-dotnet-preview)
@@ -305,8 +301,6 @@ builder.Services.AddSingleton(assistantCreator);
 - [AIAssistantCreator.cs](./CS/DevExpress.AI.Samples.Blazor/Services/AIAssistantCreator.cs)
 - [Instructions.cs](./CS/DevExpress.AI.Samples.Blazor/Instructions.cs)
 - [Program.cs](./CS/DevExpress.AI.Samples.Blazor/Program.cs)
-
-
 
 #### Set Up the AI Assistant
 
