@@ -1,4 +1,5 @@
 <!-- default badges list -->
+![](https://img.shields.io/endpoint?url=https://codecentral.devexpress.com/api/v1/VersionRange/904202803/25.1.2%2B)
 [![](https://img.shields.io/badge/Open_in_DevExpress_Support_Center-FF7200?style=flat-square&logo=DevExpress&logoColor=white)](https://supportcenter.devexpress.com/ticket/details/T1268742)
 [![](https://img.shields.io/badge/📖_How_to_use_DevExpress_Examples-e9f6fc?style=flat-square)](https://docs.devexpress.com/GeneralInformation/403183)
 [![](https://img.shields.io/badge/💬_Leave_Feedback-feecdd?style=flat-square)](#does-this-example-address-your-development-requirementsobjectives)
@@ -40,7 +41,9 @@ Open AI Assistant initialization may take time. `DxAIChat` is ready for use once
 > [!Note]
 > We use the following versions of the `Microsoft.Extensions.AI.*` libraries in our source code:
 >
-> v25.1.2+ | **9.4.3-preview.1.25230.7**
+> - Microsoft.Extensions.AI.Abstractions: **9.5.0**
+> - Microsoft.Extensions.AI: **9.5.0**
+> - Microsoft.Extensions.AI.OpenAI: **9.5.0-preview.1.25265.7**
 >
 > We do not guarantee compatibility or correct operation with higher versions.
 
@@ -126,15 +129,16 @@ Use the [`MessageContentTemplate`](https://docs.devexpress.com/Blazor/DevExpress
 
 #### Create an AI Assistant 
 
-In this example, the `AIAssistantCreator.CreateAssistantAsync` method creates an assistant with the specified [options](https://learn.microsoft.com/en-us/dotnet/api/azure.ai.openai.assistants.assistantcreationoptions?view=azure-dotnet-preview) and a thread. The 
+In this example, the `AIAssistantCreator.CreateAssistantAsync` method uploads a file to OpenAI, configures tool resources, creates an assistant with specified instructions and tools, initializes a new thread, and returns the assistant and thread IDs.
 
 You can review and tailor AI assistant instructions in the following file: [Instructions.cs](./CS/DevExpress.AI.Samples.Blazor/Instructions.cs).
 
 For information on OpenAI Assistants, refer to the following documents: 
 - [OpenAI Assistants API overview](https://platform.openai.com/docs/assistants/overview)
 - [Azure OpenAI: OpenAI Assistants client library for .NET](https://learn.microsoft.com/en-us/dotnet/api/overview/azure/ai.openai.assistants-readme?view=azure-dotnet-preview)
+- [OpenAI .NET API library](https://github.com/openai/openai-dotnet)
 
-In the *Program.cs* file, add the `AIAssistantCreator` service to the applications's service collection: 
+In the *Program.cs* file, add the `AIAssistantCreator` service to the application's service collection: 
 
 ```cs
 // ...
@@ -152,10 +156,11 @@ builder.Services.AddSingleton(assistantCreator);
 
 - [AIAssistantCreator.cs](./CS/DevExpress.AI.Samples.Blazor/Services/AIAssistantCreator.cs)
 - [Instructions.cs](./CS/DevExpress.AI.Samples.Blazor/Instructions.cs)
+- [Program.cs](./CS/DevExpress.AI.Samples.Blazor/Program.cs)
 
 #### Set Up the AI Assistant
 
-Handle the `OnAfterRenderAsync` event and call the [`SetupAssistantAsync`](https://docs.devexpress.com/Blazor/DevExpress.AIIntegration.Blazor.Chat.IAIChat.SetupAssistantAsync(System.String-System.String)?v=25.1) method to set up your AI assistant based on the Assistant's ID and thread's ID created in the previous step. This example calls our Blazor Grid's [`ExportToXlsxAsync`](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGrid.ExportToXlsxAsync.overloads) method to generate data for the AI Assistant.
+Handle the `OnAfterRenderAsync` event and call the [`SetupAssistantAsync`](https://docs.devexpress.com/Blazor/DevExpress.AIIntegration.Blazor.Chat.IAIChat.SetupAssistantAsync(System.String-System.String)?v=25.1) method to set up your AI assistant based on the assistant and thread IDs created in the previous step. This example calls our Blazor Grid's [`ExportToXlsxAsync`](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGrid.ExportToXlsxAsync.overloads) method to generate data for the AI Assistant.
 
 ```razor
 @using DevExpress.AIIntegration.OpenAI.Services
@@ -188,7 +193,6 @@ Handle the `OnAfterRenderAsync` event and call the [`SetupAssistantAsync`](https
 ```
 
 You can review and tailor AI assistant instructions in the following file: [Instructions.cs](./CS/DevExpress.AI.Samples.Blazor/Instructions.cs).
-
 
 **Files to Review:**
 
@@ -274,15 +278,16 @@ Use the [`MessageContentTemplate`](https://docs.devexpress.com/Blazor/DevExpress
 
 #### Create an AI Assistant 
 
-In this example, the `AIAssistantCreator.CreateAssistantAsync` method creates an assistant with the specified [options](https://learn.microsoft.com/en-us/dotnet/api/azure.ai.openai.assistants.assistantcreationoptions?view=azure-dotnet-preview) and a thread. The 
+In this example, the `AIAssistantCreator.CreateAssistantAsync` method uploads a file to OpenAI, configures tool resources, creates an assistant with specified instructions and tools, initializes a new thread, and returns the assistant and thread IDs.
 
 You can review and tailor AI assistant instructions in the following file: [Instructions.cs](./CS/DevExpress.AI.Samples.Blazor/Instructions.cs).
 
 For information on OpenAI Assistants, refer to the following documents: 
 - [OpenAI Assistants API overview](https://platform.openai.com/docs/assistants/overview)
 - [Azure OpenAI: OpenAI Assistants client library for .NET](https://learn.microsoft.com/en-us/dotnet/api/overview/azure/ai.openai.assistants-readme?view=azure-dotnet-preview)
+- [OpenAI .NET API library](https://github.com/openai/openai-dotnet)
 
-In the *Program.cs* file, add the `AIAssistantCreator` service to the applications's service collection: 
+In the *Program.cs* file, add the `AIAssistantCreator` service to the application's service collection: 
 
 ```cs
 // ...
@@ -300,10 +305,18 @@ builder.Services.AddSingleton(assistantCreator);
 
 - [AIAssistantCreator.cs](./CS/DevExpress.AI.Samples.Blazor/Services/AIAssistantCreator.cs)
 - [Instructions.cs](./CS/DevExpress.AI.Samples.Blazor/Instructions.cs)
+- [Program.cs](./CS/DevExpress.AI.Samples.Blazor/Program.cs)
+
+
+**Files to Review:**
+
+- [AIAssistantCreator.cs](./CS/DevExpress.AI.Samples.Blazor/Services/AIAssistantCreator.cs)
+- [Instructions.cs](./CS/DevExpress.AI.Samples.Blazor/Instructions.cs)
+- [Program.cs](./CS/DevExpress.AI.Samples.Blazor/Program.cs)
 
 #### Set Up the AI Assistant
 
-Handle the [`Initialized`](https://docs.devexpress.com/Blazor/DevExpress.AIIntegration.Blazor.Chat.DxAIChat.Initialized) event and call the [`SetupAssistantAsync`](https://docs.devexpress.com/Blazor/DevExpress.AIIntegration.Blazor.Chat.IAIChat.SetupAssistantAsync(System.String-System.String)?v=25.1) method method to set up your AI assistant based on the Assistant's ID and thread's ID created in the previous step. This example calls the [`ExportToPdf`](https://docs.devexpress.com/CoreLibraries/DevExpress.XtraPrinting.PrintingSystemBase.ExportToPdf(System.IO.Stream)) method to generate data for the AI Assistant:
+Handle the [`Initialized`](https://docs.devexpress.com/Blazor/DevExpress.AIIntegration.Blazor.Chat.DxAIChat.Initialized) event and call the [`SetupAssistantAsync`](https://docs.devexpress.com/Blazor/DevExpress.AIIntegration.Blazor.Chat.IAIChat.SetupAssistantAsync(System.String-System.String)?v=25.1) method to set up your AI assistant based on the Assistant's ID and thread's ID created in the previous step. This example calls the [`ExportToPdf`](https://docs.devexpress.com/CoreLibraries/DevExpress.XtraPrinting.PrintingSystemBase.ExportToPdf(System.IO.Stream)) method to generate data for the AI Assistant:
 
 ```razor
 @using DevExpress.AIIntegration.Blazor.Chat
