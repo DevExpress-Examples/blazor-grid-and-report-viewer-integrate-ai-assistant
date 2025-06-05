@@ -6,7 +6,7 @@
 @using Markdig
 
 @inject IssuesDataService IssuesDataService
-@inject AIAssistantCreator assistantCreator;
+@inject AIAssistantCreator assistantCreator
 
 <DxGrid @ref="grid" Data="@DataSource" CssClass="my-grid" ShowGroupPanel="true" TextWrapEnabled="false" AutoExpandAllGroupRows="true"
         CustomizeFilterRowEditor="Grid_CustomizeFilterRowEditor" FilterMenuButtonDisplayMode="GridFilterMenuButtonDisplayMode.Always"
@@ -23,7 +23,7 @@
         </DxGridDataColumn>
         <DxGridDataColumn FieldName="ProjectID" Caption="Project" GroupIndex="0" Width="220px">
             <EditSettings>
-                <DxComboBoxSettings Data="ProjectList" ValueFieldName="ID" TextFieldName="Name" 
+                <DxComboBoxSettings Data="ProjectList" ValueFieldName="ID" TextFieldName="Name"
                                     SearchFilterCondition="ListSearchFilterCondition.Contains" />
             </EditSettings>
         </DxGridDataColumn>
@@ -155,7 +155,12 @@
                         ExportDisplayText = true
                     });
 
-                (string assistantId, string threadId) = await assistantCreator.CreateAssistantAsync(ms, "grid_data.xlsx", AssistantHelper.GetAIAssistantInstructions("xlsx"), false);
+                (string assistantId, string threadId) = await assistantCreator.CreateAssistantAsync(
+                    ms,
+                    "grid_data.xlsx",
+                    AssistantHelper.GetAIAssistantInstructions("xlsx"),
+                    false
+                );
                 await chat.SetupAssistantAsync(assistantId, threadId);
 
                 grid.ShowGroupedColumns = false;
