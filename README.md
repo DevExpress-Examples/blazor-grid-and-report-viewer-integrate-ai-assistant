@@ -41,9 +41,11 @@ Open AI Assistant initialization may take time. `DxAIChat` is ready for use once
 > [!Note]
 > We use the following versions of the `Microsoft.Extensions.AI.*` libraries in our source code:
 >
-> v24.2.6+ | **9.3.0-preview.1.25161.3**
+> - Microsoft.Extensions.AI.Abstractions: **9.5.0**
+> - Microsoft.Extensions.AI: **9.5.0**
+> - Microsoft.Extensions.AI.OpenAI: **9.5.0-preview.1.25265.7**
 >
-> We do not guarantee compatibility or correct operation with higher versions. Refer to the following announcement for additional information: [Microsoft.Extensions.AI.Abstractions NuGet Package Version Upgrade in v24.2.6](https://community.devexpress.com/blogs/news/archive/2025/03/12/important-announcement-microsoft-extensions-ai-abstractions-nuget-package-version-upgrade.aspx).
+> We do not guarantee compatibility or correct operation with other versions.
 
 ## Implementation Details
 
@@ -64,12 +66,14 @@ string azureOpenAIEndpoint = "AZURE_OPENAI_ENDPOINT";
 string azureOpenAIKey = "AZURE_OPENAI_API_KEY";
 string deploymentName = "YOUR_MODEL_NAME";
 //...
-var azureClient = new AzureOpenAIClient(
+var azureOpenAIClient = new AzureOpenAIClient(
     new Uri(azureOpenAIEndpoint),
     new ApiKeyCredential(azureOpenAIKey));
-builder.Services.AddChatClient(azureClient.AsChatClient(deploymentName));
+var chatClient = azureOpenAIClient.GetChatClient(deploymentName).AsIChatClient();
+
+builder.Services.AddChatClient(chatClient);
 builder.Services.AddDevExpressAI((config) => {
-    config.RegisterOpenAIAssistants(azureClient, deploymentName); 
+    config.RegisterOpenAIAssistants(azureOpenAIClient, deploymentName); 
 });
 ```
 

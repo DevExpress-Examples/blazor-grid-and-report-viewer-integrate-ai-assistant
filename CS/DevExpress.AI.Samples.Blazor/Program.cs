@@ -17,16 +17,18 @@ string azureOpenAIEndpoint = Environment.GetEnvironmentVariable("AZURE_OPENAI_EN
 string azureOpenAIKey = Environment.GetEnvironmentVariable("AZURE_OPENAI_API_KEY");
 string deploymentName = "gpt4o-big";
 
-var azureClient = new AzureOpenAIClient(
+var azureOpenAIClient = new AzureOpenAIClient(
     new Uri(azureOpenAIEndpoint),
     new ApiKeyCredential(azureOpenAIKey));
 
+var chatClient = azureOpenAIClient.GetChatClient(deploymentName).AsIChatClient();
+
 builder.Services.AddDevExpressBlazor();
 builder.Services.AddDevExpressServerSideBlazorReportViewer();
-builder.Services.AddChatClient(azureClient.AsChatClient(deploymentName));
+builder.Services.AddChatClient(chatClient);
 builder.Services.AddDevExpressAI((config) => {
     //Reference the DevExpress.AIIntegration.OpenAI NuGet package to use Open AI Asisstants
-    config.RegisterOpenAIAssistants(azureClient, deploymentName); 
+    config.RegisterOpenAIAssistants(azureOpenAIClient, deploymentName); 
 });
 builder.Services.AddSingleton<IDemoReportSource, DemoReportSource>();
 builder.Services.AddDbContextFactory<IssuesContext>(opt => {
