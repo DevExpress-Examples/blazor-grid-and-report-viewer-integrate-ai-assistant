@@ -1,7 +1,14 @@
-﻿
+﻿body {
+    margin: 0;
+}
+
+p {
+    margin-top: 0;
+}
+
 .main-layout {
     display: flex;
-    height: 100vh;
+    max-height: 100vh;
 }
 
 .my-list {
@@ -42,16 +49,21 @@
     height: 100%;
 }
 
-.my-grid {
-    height: 100vh;
-}
-
 .my-grid-chat {
-    width: 600px;
-    height: 100vh;
+    width: 570px;
 }
 
 /*grid*/
+
+.badge {
+    padding: 2px 8px;
+    font-size: 90%;
+    color: #fff;
+    font-weight: 700;
+    border-radius: 3px;
+    display: inline-block
+}
+
 .priority-info {
     background-color: #00a9e6;
 }
