@@ -5,6 +5,7 @@
 @using DevExpress.AIIntegration.OpenAI.Services
 @using Markdig
 
+@implements IAsyncDisposable
 @inject IssuesDataService IssuesDataService
 @inject AIAssistantCreator assistantCreator
 
@@ -168,5 +169,9 @@
             }
         }
         await base.OnAfterRenderAsync(firstRender);
+    }
+    
+    public async ValueTask DisposeAsync() {
+        await assistantCreator.CleanUpAsync();
     }
 }

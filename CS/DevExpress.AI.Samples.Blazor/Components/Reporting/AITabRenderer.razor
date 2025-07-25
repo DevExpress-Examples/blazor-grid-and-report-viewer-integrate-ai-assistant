@@ -5,6 +5,7 @@
 @using DevExpress.AIIntegration.OpenAI.Services
 @using Markdig
 
+@implements IAsyncDisposable
 @inject AIAssistantCreator assistantCreator
 
 <DxAIChat CssClass="my-report-chat" Initialized="ChatInitialized">
@@ -36,5 +37,9 @@
             );
             await aIChat.SetupAssistantAsync(assistantId, threadId);
         }
+    }
+    
+    public async ValueTask DisposeAsync() {
+        await assistantCreator.CleanUpAsync();
     }
 }

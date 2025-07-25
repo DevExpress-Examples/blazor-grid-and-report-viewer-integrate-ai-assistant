@@ -5,10 +5,12 @@ using OpenAI.Files;
 
 namespace DevExpress.AI.Samples.Blazor.Services {
 #pragma warning disable OPENAI001
-    public class AIAssistantCreator : IDisposable {
+    public class AIAssistantCreator : IAsyncDisposable {
         readonly AssistantClient assistantClient;
         readonly OpenAIFileClient fileClient;
         readonly string deployment;
+            
+        bool resourcesCreated;
         AssistantThread thread;
         Assistant assistant;
         OpenAIFile file;
@@ -50,17 +52,32 @@ namespace DevExpress.AI.Samples.Blazor.Services {
             return (assistantResponse.Value.Id, threadResponse.Value.Id);
         }
         
-        public void Dispose() {
-            try {
-                if(assistant != null){
-                    assistantClient?.DeleteAssistant(assistant.Id);
-                    assistantClient?.DeleteThread(thread.Id);
-                    fileClient?.DeleteFile(file.Id);
-                    assistant = null;
-                    thread = null;
-                    file = null;
+        public async Task CleanUpAsync() {
+            if(resourcesCreated){
+                try{
+                    if(assistant != null){
+                        await assistantClient.DeleteAssistantAsync(assistant.Id);
+                        assistant = null;
+                    }
+
+                    if(thread != null){
+                        await assistantClient.DeleteThreadAsync(thread.Id);
+                        thread = null;
+                    }
+
+                    if(file != null){
+                        await fileClient.DeleteFileAsync(file.Id);
+                        file = null;
+                    }
+
+                    resourcesCreated = false;
                 }
-            } catch {}
+                catch{}
+            }
+        }
+
+        public async ValueTask DisposeAsync() {
+            await CleanUpAsync();
         }
     }
 #pragma warning restore OPENAI001
