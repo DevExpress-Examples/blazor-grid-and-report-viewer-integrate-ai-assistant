@@ -7,7 +7,7 @@
 
 @implements IAsyncDisposable
 @inject IssuesDataService IssuesDataService
-@inject AIAssistantCreator assistantCreator
+@inject AIAssistantManager AssistantManager
 
 <DxGrid @ref="grid" Data="@DataSource" CssClass="my-grid" ShowGroupPanel="true" TextWrapEnabled="false" AutoExpandAllGroupRows="true"
         CustomizeFilterRowEditor="Grid_CustomizeFilterRowEditor" FilterMenuButtonDisplayMode="GridFilterMenuButtonDisplayMode.Always"
@@ -82,6 +82,9 @@
 </DxAIChat>
 
 @code {
+    string assistantId;
+    string threadId;
+    string fileId;
     IGrid grid;
     IAIChat chat;
     MarkupString ToHtml(string text) {
@@ -156,7 +159,7 @@
                         ExportDisplayText = true
                     });
 
-                (string assistantId, string threadId) = await assistantCreator.CreateAssistantAsync(
+                (assistantId, threadId, fileId) = await AssistantManager.CreateAssistantAsync(
                     ms,
                     "grid_data.xlsx",
                     AssistantHelper.GetAIAssistantInstructions("xlsx"),
@@ -172,6 +175,6 @@
     }
     
     public async ValueTask DisposeAsync() {
-        await assistantCreator.CleanUpAsync();
+        await AssistantManager.CleanUpAssistantAsync(assistantId, threadId, fileId);
     }
 }

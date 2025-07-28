@@ -6,7 +6,7 @@
 @using Markdig
 
 @implements IAsyncDisposable
-@inject AIAssistantCreator assistantCreator
+@inject AIAssistantManager AssistantManager
 
 <DxAIChat CssClass="my-report-chat" Initialized="ChatInitialized">
     <MessageContentTemplate>
@@ -17,6 +17,9 @@
 </DxAIChat>
 
 @code {
+    string assistantId;
+    string threadId;
+    string fileId;
     [Parameter] public UserAssistantTabContentModel Model { get; set; }
     string ClearAnnotations(string text) {
         //To clear out annotations in a response from the assistant.
@@ -30,7 +33,7 @@
 
     async Task ChatInitialized(IAIChat aIChat) {
         using (MemoryStream ms = Model.GetReportData()) {
-            (string assistantId, string threadId) = await assistantCreator.CreateAssistantAsync(
+            (assistantId, threadId, fileId) = await AssistantManager.CreateAssistantAsync(
                 ms, 
                 "report.pdf", 
                 AssistantHelper.GetAIAssistantInstructions("pdf")
@@ -40,6 +43,6 @@
     }
     
     public async ValueTask DisposeAsync() {
-        await assistantCreator.CleanUpAsync();
+        await AssistantManager.CleanUpAssistantAsync(assistantId, threadId, fileId);
     }
 }
