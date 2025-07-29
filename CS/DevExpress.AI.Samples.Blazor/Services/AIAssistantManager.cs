@@ -18,17 +18,17 @@ namespace DevExpress.AI.Samples.Blazor.Services {
 
         public async Task<(string assistantId, string threadId, string fieldId)> CreateAssistantAsync(Stream data, string fileName, string instructions, bool useFileSearchTool = true, CancellationToken ct = default) {
             data.Position = 0;
-            
+
             ClientResult<OpenAIFile> fileResponse = await fileClient.UploadFileAsync(data, fileName, FileUploadPurpose.Assistants, ct);
             var file = fileResponse.Value;
-            
+
             var resources = new ToolResources() {
                 CodeInterpreter = new CodeInterpreterToolResources(),
                 FileSearch = useFileSearchTool ? new FileSearchToolResources() : null
             };
             resources.FileSearch?.NewVectorStores.Add(new VectorStoreCreationHelper([file.Id]));
             resources.CodeInterpreter.FileIds.Add(file.Id);
-            
+
             AssistantCreationOptions assistantCreationOptions = new AssistantCreationOptions() {
                 Name = Guid.NewGuid().ToString(),
                 Instructions = instructions,
@@ -38,12 +38,12 @@ namespace DevExpress.AI.Samples.Blazor.Services {
             if (useFileSearchTool) {
                 assistantCreationOptions.Tools.Add(new FileSearchToolDefinition());
             }
-            
+
             ClientResult<Assistant> assistantResponse = await assistantClient.CreateAssistantAsync(deployment, assistantCreationOptions, ct);
             var assistant = assistantResponse.Value;
             ClientResult<AssistantThread> threadResponse = await assistantClient.CreateThreadAsync(cancellationToken: ct);
             var thread = threadResponse.Value;
-            
+
             return (assistant.Id, thread.Id, file.Id);
         }
         
