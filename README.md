@@ -129,14 +129,14 @@ Use the [`MessageContentTemplate`](https://docs.devexpress.com/Blazor/DevExpress
 
 #### Create an AI Assistant 
 
-In this example, the `AIAssistantCreator.CreateAssistantAsync` method uploads a file to OpenAI, configures tool resources, creates an assistant with specified instructions and tools, initializes a new thread, and returns the assistant and thread IDs.
+In this example, the `AIAssistantManager.CreateAssistantAsync` method uploads a file to OpenAI, configures tool resources, creates an assistant with specified instructions and tools, initializes a new thread, and returns the assistant and thread IDs.
 
 For information on OpenAI Assistants, refer to the following documents: 
 - [OpenAI Assistants API overview](https://platform.openai.com/docs/assistants/overview)
 - [Azure OpenAI: OpenAI Assistants client library for .NET](https://learn.microsoft.com/en-us/dotnet/api/overview/azure/ai.openai.assistants-readme?view=azure-dotnet-preview)
 - [OpenAI .NET API library](https://github.com/openai/openai-dotnet)
 
-In the *Program.cs* file, add the `AIAssistantCreator` service to the application's service collection: 
+In the *Program.cs* file, add the `AIAssistantManager` service to the application's service collection: 
 
 ```cs
 // ...
@@ -144,15 +144,15 @@ var azureOpenAIClient = new AzureOpenAIClient(
     new Uri(azureOpenAIEndpoint),
     new ApiKeyCredential(azureOpenAIKey));
 
-var assistantCreator = new AIAssistantCreator(azureOpenAIClient, deploymentName);
+var assistantManager = new AIAssistantManager(azureOpenAIClient, deploymentName);
 
-builder.Services.AddSingleton(assistantCreator);
+builder.Services.AddSingleton(assistantManager);
 // ...
 ```
 
 **Files to Review:**
 
-- [AIAssistantCreator.cs](./CS/DevExpress.AI.Samples.Blazor/Services/AIAssistantCreator.cs)
+- [AIAssistantManager.cs](./CS/DevExpress.AI.Samples.Blazor/Services/AIAssistantManager.cs)
 - [Instructions.cs](./CS/DevExpress.AI.Samples.Blazor/Instructions.cs)
 - [Program.cs](./CS/DevExpress.AI.Samples.Blazor/Program.cs)
 
@@ -162,7 +162,7 @@ Handle the `OnAfterRenderAsync` event and call the [`SetupAssistantAsync`](https
 
 ```razor
 @using DevExpress.AIIntegration.OpenAI.Services
-@inject AIAssistantCreator assistantCreator
+@inject AIAssistantManager AssistantManager
 
 @* ... *@
 @code {
@@ -174,7 +174,7 @@ Handle the `OnAfterRenderAsync` event and call the [`SetupAssistantAsync`](https
                 await grid.ExportToXlsxAsync(ms, new GridXlExportOptions() {
                         ExportDisplayText = true
                     });
-                (string assistantId, string threadId) = await assistantCreator.CreateAssistantAsync(
+                (string assistantId, string threadId) = await AssistantManager.CreateAssistantAsync(
                     ms,
                     "grid_data.xlsx",
                     AssistantHelper.GetAIAssistantInstructions("xlsx"),
@@ -276,14 +276,14 @@ Use the [`MessageContentTemplate`](https://docs.devexpress.com/Blazor/DevExpress
 
 #### Create an AI Assistant 
 
-In this example, the `AIAssistantCreator.CreateAssistantAsync` method uploads a file to OpenAI, configures tool resources, creates an assistant with specified instructions and tools, initializes a new thread, and returns the assistant and thread IDs.
+In this example, the `AIAssistantManager.CreateAssistantAsync` method uploads a file to OpenAI, configures tool resources, creates an assistant with specified instructions and tools, initializes a new thread, and returns the assistant and thread IDs.
 
 For information on OpenAI Assistants, refer to the following documents: 
 - [OpenAI Assistants API overview](https://platform.openai.com/docs/assistants/overview)
 - [Azure OpenAI: OpenAI Assistants client library for .NET](https://learn.microsoft.com/en-us/dotnet/api/overview/azure/ai.openai.assistants-readme?view=azure-dotnet-preview)
 - [OpenAI .NET API library](https://github.com/openai/openai-dotnet)
 
-In the *Program.cs* file, add the `AIAssistantCreator` service to the application's service collection: 
+In the *Program.cs* file, add the `AIAssistantManager` service to the application's service collection: 
 
 ```cs
 // ...
@@ -291,15 +291,15 @@ var azureOpenAIClient = new AzureOpenAIClient(
     new Uri(azureOpenAIEndpoint),
     new ApiKeyCredential(azureOpenAIKey));
 
-var assistantCreator = new AIAssistantCreator(azureOpenAIClient, deploymentName);
+var assistantManager = new AIAssistantManager(azureOpenAIClient, deploymentName);
 
-builder.Services.AddSingleton(assistantCreator);
+builder.Services.AddSingleton(assistantManager);
 // ...
 ```
 
 **Files to Review:**
 
-- [AIAssistantCreator.cs](./CS/DevExpress.AI.Samples.Blazor/Services/AIAssistantCreator.cs)
+- [AIAssistantManager.cs](./CS/DevExpress.AI.Samples.Blazor/Services/AIAssistantManager.cs)
 - [Instructions.cs](./CS/DevExpress.AI.Samples.Blazor/Instructions.cs)
 - [Program.cs](./CS/DevExpress.AI.Samples.Blazor/Program.cs)
 
@@ -311,7 +311,7 @@ Handle the [`Initialized`](https://docs.devexpress.com/Blazor/DevExpress.AIInteg
 @using DevExpress.AIIntegration.Blazor.Chat
 @using DevExpress.AIIntegration.OpenAI.Services
 // ...
-@inject AIAssistantCreator assistantCreator
+@inject AIAssistantManager AssistantManager
 
 <DxAIChat CssClass="my-report-chat" Initialized="ChatInitialized">
     @* ... *@
@@ -321,7 +321,7 @@ Handle the [`Initialized`](https://docs.devexpress.com/Blazor/DevExpress.AIInteg
     // ...
     async Task ChatInitialized(IAIChat aIChat) {
         using (MemoryStream ms = Model.GetReportData()) {
-            (string assistantId, string threadId) = await assistantCreator.CreateAssistantAsync(
+            (string assistantId, string threadId) = await AssistantManager.CreateAssistantAsync(
                 ms, 
                 "report.pdf", 
                 AssistantHelper.GetAIAssistantInstructions("pdf")
