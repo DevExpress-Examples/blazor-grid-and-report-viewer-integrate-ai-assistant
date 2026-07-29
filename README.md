@@ -73,7 +73,7 @@ builder.Services.AddDevExpressAI((config) => {
 });
 ```
 
-For additional information on the use of AI Assistants with `DxAIChat` and managing messages with custom RAG (Retrieval-Augmented Generation) solutions, refer to the following topic: [AI Service Assistants in the DxAIChat component](https://docs.devexpress.com/Blazor/DevExpress.AIIntegration.Blazor.Chat.DxAIChat#ai-service-assistants).
+For additional information on the use of AI Assistants with `DxAIChat` and managing messages with custom RAG (Retrieval-Augmented Generation) solutions, refer to the following topic: [Chat with Your Own Data](https://docs.devexpress.com/Blazor/405974/ai-powered-extensions/ai-chat-component/ai-chat-with-own-data).
 
 >[!NOTE]
 > The availability of Azure Open AI Assistants depends on region. For additional guidance in this regard, refer to the following document: [Azure OpenAI Service models -- Assistants (Preview)](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models?tabs=global-standard%2Cstandard-chat-completions#assistants-preview).
