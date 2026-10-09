@@ -36,7 +36,7 @@ The following DevExpress Blazor Components were used in this sample project:
 
     Implementation details: [Add an AI Assistant to the DevExpress Blazor Report Viewer](#add-an-ai-assistant-to-the-devexpress-blazor-report-viewer).
 
-AI agent initialization may take time. `DxAIChat` is ready for use once the source document is uploaded to Microsoft Azure OpenAI and indexed.
+AI agent initialization may take time. `DxAIChat` is ready for use once Microsoft Azure OpenAI completes the source document indexing.
 
 > [!Note]
 > We use the following versions of Microsoft AI packages in our `v26.1.3+` source code:
