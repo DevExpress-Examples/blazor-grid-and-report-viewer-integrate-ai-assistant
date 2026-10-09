@@ -2,12 +2,12 @@
 @using DevExpress.AI.Samples.Blazor.Data;
 @using DevExpress.AI.Samples.Blazor.Services
 @using DevExpress.AIIntegration.Blazor.Chat
-@using DevExpress.AIIntegration.OpenAI.Services
 @using Markdig
 
 @implements IAsyncDisposable
 @inject IssuesDataService IssuesDataService
-@inject AIAssistantManager AssistantManager
+@inject AIAgentFactory AgentFactory
+@inject AIChatSessionStore ChatSessionStore
 
 <DxGrid @ref="grid" Data="@DataSource" CssClass="my-grid" ShowGroupPanel="true" TextWrapEnabled="false" AutoExpandAllGroupRows="true"
         CustomizeFilterRowEditor="Grid_CustomizeFilterRowEditor" FilterMenuButtonDisplayMode="GridFilterMenuButtonDisplayMode.Always"
@@ -73,20 +73,21 @@
         <DxGridSummaryItem FieldName="ID" SummaryType="GridSummaryItemType.Count" FooterColumnName="Name" />
     </TotalSummary>
 </DxGrid>
-<DxAIChat @ref="chat" CssClass="my-grid-chat">
-    <MessageContentTemplate>
-        <div class="my-chat-content">
-            @ToHtml(context.Content)
-        </div>
-    </MessageContentTemplate>
-</DxAIChat>
+@if(chatProviderKey != null) {
+    <DxAIChat CssClass="my-grid-chat" ChatResponseProviderServiceKey="@chatProviderKey">
+        <MessageContentTemplate>
+            <div class="my-chat-content">
+                @ToHtml(context.Text)
+            </div>
+        </MessageContentTemplate>
+    </DxAIChat>
+} else {
+    <div class="my-grid-chat my-chat-loading">Preparing the AI Assistant...</div>
+}
 
 @code {
-    string assistantId;
-    string threadId;
-    string fileId;
+    string chatProviderKey;
     IGrid grid;
-    IAIChat chat;
     MarkupString ToHtml(string text) {
         return (MarkupString)Markdown.ToHtml(text);
     }
@@ -159,22 +160,24 @@
                         ExportDisplayText = true
                     });
 
-                (assistantId, threadId, fileId) = await AssistantManager.CreateAssistantAsync(
+                grid.ShowGroupedColumns = false;
+                grid.EndUpdate();
+
+                // Vector stores do not support XLSX files, so the agent analyzes data with the Code Interpreter tool only.
+                var (provider, cleanup) = await AgentFactory.CreateAgentWithFileAsync(
                     ms,
                     "grid_data.xlsx",
                     AssistantHelper.GetAIAssistantInstructions("xlsx"),
-                    false
+                    useFileSearchTool: false
                 );
-                await chat.SetupAssistantAsync(assistantId, threadId);
-
-                grid.ShowGroupedColumns = false;
-                grid.EndUpdate();
+                chatProviderKey = ChatSessionStore.Register(provider, cleanup);
+                StateHasChanged();
             }
         }
         await base.OnAfterRenderAsync(firstRender);
     }
-    
+
     public async ValueTask DisposeAsync() {
-        await AssistantManager.CleanUpAssistantAsync(assistantId, threadId, fileId);
+        await ChatSessionStore.CloseAsync(chatProviderKey);
     }
 }

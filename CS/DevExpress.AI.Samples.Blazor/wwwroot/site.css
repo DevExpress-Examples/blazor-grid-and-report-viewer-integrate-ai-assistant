@@ -53,6 +53,13 @@ p {
     width: 570px;
 }
 
+.my-chat-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--bs-secondary-color, #6c757d);
+}
+
 /*grid*/
 
 .badge {
