@@ -48,9 +48,6 @@ AI agent initialization may take time. `DxAIChat` is ready for use once Microsof
 >
 > We do not guarantee compatibility or correct operation with higher versions. Refer to the following announcement for additional information: [DevExpress.AIIntegration moves to a stables version](https://supportcenter.devexpress.com/ticket/details/t1292705/devexpress-aiintegration-references-stable-versions-of-microsoft-ai-packages).
 
-> [!Important]
-> Previous versions of this example used the OpenAI Assistants API (`RegisterOpenAIAssistants`, `IAIChat.SetupAssistantAsync`). These APIs are deprecated. This example now uses the OpenAI Responses API through the `IChatResponseProvider` interface.
-
 ## Implementation Details
 
 ### Register AI Services
