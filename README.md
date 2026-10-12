@@ -41,10 +41,10 @@ AI agent initialization may take time. `DxAIChat` is ready for use once Microsof
 > [!Note]
 > We use the following versions of Microsoft AI packages in our `v26.1.3+` source code:
 >
-> * `Microsoft.Extensions.AI` | **10.6.0**
-> * `Microsoft.Extensions.AI.OpenAI` | **10.6.0**
-> * `Microsoft.Agents.AI.OpenAI` | **1.5.0**
-> * `Azure.AI.OpenAI` | **2.9.0-beta.1**
+> * `Microsoft.Extensions.AI` | **v10.6.0**
+> * `Microsoft.Extensions.AI.OpenAI` | **v10.6.0**
+> * `Microsoft.Agents.AI.OpenAI` | **v1.5.0**
+> * `Azure.AI.OpenAI` | **v2.9.0-beta.1**
 >
 > We do not guarantee compatibility or correct operation with higher versions. Refer to the following announcement for additional information: [DevExpress.AIIntegration moves to a stables version](https://supportcenter.devexpress.com/ticket/details/t1292705/devexpress-aiintegration-references-stable-versions-of-microsoft-ai-packages).
 
