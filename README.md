@@ -4,7 +4,7 @@
 [![](https://img.shields.io/badge/📖_How_to_use_DevExpress_Examples-e9f6fc?style=flat-square)](https://docs.devexpress.com/GeneralInformation/403183)
 [![](https://img.shields.io/badge/💬_Leave_Feedback-feecdd?style=flat-square)](#does-this-example-address-your-development-requirementsobjectives)
 <!-- default badges end -->
-# Blazor Grid and Report Viewer — Incorporate an AI Assistant (Azure OpenAI) in your next DevExpress-powered Blazor app 
+# Blazor Grid and Report Viewer — Incorporate an AI Assistant (Azure OpenAI) in Your Next DevExpress-Powered Blazor App 
 
 This example adds a Copilot-inspired chat window (DevExpress [`DxAIChat`](http://docs.devexpress.com/Blazor/DevExpress.AIIntegration.Blazor.Chat.DxAIChat) component) to a DevExpress-powered Blazor application (using both the DevExpress Report Viewer and Blazor Grid component). Our chat implementation uses an AI agent built on the [Azure OpenAI Responses API](https://learn.microsoft.com/en-us/azure/ai-foundry/openai/how-to/responses) and [Microsoft Agent Framework](https://learn.microsoft.com/en-us/agent-framework/) to answer user questions based on information displayed in the report and/or data grid. 
 
