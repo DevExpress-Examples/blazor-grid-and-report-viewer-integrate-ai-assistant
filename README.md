@@ -133,7 +133,7 @@ var session = await aiAgent.CreateSessionAsync(ct);
 return (aiAgent.AsIChatResponseProvider(session), Cleanup);
 ```
 
-For information on the Responses API and AI agents, refer to the following documents: 
+Refer to the following documents for additional information on the Responses API and AI agents: 
 - [Azure OpenAI Responses API](https://learn.microsoft.com/en-us/azure/ai-foundry/openai/how-to/responses)
 - [Microsoft Agent Framework](https://learn.microsoft.com/en-us/agent-framework/)
 - [OpenAI .NET API library](https://github.com/openai/openai-dotnet)
