@@ -191,7 +191,7 @@ Use the [`MessageContentTemplate`](https://docs.devexpress.com/Blazor/DevExpress
 
 - [Grid.razor](./CS/DevExpress.AI.Samples.Blazor/Components/Pages/Grid.razor)
 
-#### Set Up the AI Assistant
+#### Set Up the AI Assistant for the Grid
 
 Handle the `OnAfterRenderAsync` event and call our Blazor Grid's [`ExportToXlsxAsync`](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGrid.ExportToXlsxAsync.overloads) method to generate data for the AI Assistant. Pass the data to the `AIAgentFactory.CreateAgentWithFileAsync` method, register the resulting provider in `AIChatSessionStore`, and assign the returned key to the chat's `ChatResponseProviderServiceKey` property. Close the session when the page is disposed to delete the uploaded file.
 
@@ -282,7 +282,7 @@ The `TabTemplate` property specifies tab content. It dynamically renders the `AI
 - [ReportViewer.razor](./CS/DevExpress.AI.Samples.Blazor/Components/Pages/ReportViewer.razor)
 - [UserAssistantTabContentModel.cs](./CS/DevExpress.AI.Samples.Blazor/Models/UserAssistantTabContentModel.cs)
 
-#### Set Up the AI Assistant
+#### Set Up the AI Assistant for the Report Viewer
 
 The content for the AI Assistant tab is defined in the following file: [AITabRenderer.razor](./CS/DevExpress.AI.Samples.Blazor/Components/Reporting/AITabRenderer.razor).
 
