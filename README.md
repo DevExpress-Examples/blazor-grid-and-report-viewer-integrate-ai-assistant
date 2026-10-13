@@ -6,13 +6,13 @@
 <!-- default badges end -->
 # Blazor Grid and Report Viewer — Incorporate an AI Assistant (Azure OpenAI) in Your Next DevExpress-Powered Blazor App 
 
-This example adds a Copilot-inspired chat window (DevExpress [`DxAIChat`](http://docs.devexpress.com/Blazor/DevExpress.AIIntegration.Blazor.Chat.DxAIChat) component) to a DevExpress-powered Blazor application (using both the DevExpress Report Viewer and Blazor Grid component). Our chat implementation uses an AI agent built on the [Azure OpenAI Responses API](https://learn.microsoft.com/en-us/azure/ai-foundry/openai/how-to/responses) and [Microsoft Agent Framework](https://learn.microsoft.com/en-us/agent-framework/) to answer user questions based on information displayed in the report and/or data grid. 
+This example adds a Copilot-inspired chat window (DevExpress [`DxAIChat`](http://docs.devexpress.com/Blazor/DevExpress.AIIntegration.Blazor.Chat.DxAIChat) component) to a DevExpress-powered Blazor application (using both DevExpress Report Viewer and Blazor Grid components). The chat implementation uses an AI agent built on the [Azure OpenAI Responses API](https://learn.microsoft.com/en-us/azure/ai-foundry/openai/how-to/responses) and [Microsoft Agent Framework](https://learn.microsoft.com/en-us/agent-framework/) to answer user questions (based on information displayed in the report and/or data grid). 
 
 To integrate AI-powered chat capabilities to your next great Blazor application, please follow the steps below:  
 
 1. Register AI Services within the application. 
 2. Add the DevExpress Chat component (`DxAIChat`). 
-3. Export component data, create an AI agent for this data, and bind the agent to the chat. 
+3. Export component data, create an AI agent to process this data, and bind the agent to the chat. 
 
 The following DevExpress Blazor Components were used in this sample project:
 
@@ -36,7 +36,7 @@ The following DevExpress Blazor Components were used in this sample project:
 
     Implementation details: [Add an AI Assistant to the DevExpress Blazor Report Viewer](#add-an-ai-assistant-to-the-devexpress-blazor-report-viewer).
 
-AI agent initialization may take time. `DxAIChat` is ready for use once Microsoft Azure OpenAI completes the source document indexing.
+AI agent initialization may take time. `DxAIChat` is ready for use once Microsoft Azure OpenAI completes source document indexing.
 
 > [!Note]
 > We use the following versions of Microsoft AI packages in our `v26.1.3+` source code:
@@ -88,12 +88,12 @@ builder.Services.AddSingleton(sp =>
     new AIAgentFactory(azureOpenAIClient, deploymentName, sp.GetRequiredService<ILogger<AIAgentFactory>>()));
 builder.Services.AddSingleton<AIChatSessionStore>();
 // Resolve an IChatResponseProvider for any key registered in AIChatSessionStore.
-// DxAIChat components bind to their providers with the ChatResponseProviderServiceKey property.
+// DxAIChat components are bound to their providers using the ChatResponseProviderServiceKey property.
 builder.Services.AddKeyedTransient<IChatResponseProvider>(KeyedService.AnyKey,
     (sp, key) => sp.GetRequiredService<AIChatSessionStore>().GetProvider(key as string));
 ```
 
-The `AIAgentFactory` service creates AI agents for exported component data. Each agent is wrapped in an `IChatResponseProvider` object. The `AIChatSessionStore` service stores these providers under unique keys. The keyed `IChatResponseProvider` registration allows each `DxAIChat` component to obtain its provider by key with the [`ChatResponseProviderServiceKey`](https://docs.devexpress.com/Blazor/DevExpress.AIIntegration.Blazor.Chat.DxAIChat.ChatResponseProviderServiceKey) property.
+The `AIAgentFactory` service creates AI agents to process exported component data. Each agent is wrapped in an `IChatResponseProvider` object. The `AIChatSessionStore` service stores these providers under unique keys. The keyed `IChatResponseProvider` registration allows each `DxAIChat` component to obtain its provider by key (using the [`ChatResponseProviderServiceKey`](https://docs.devexpress.com/Blazor/DevExpress.AIIntegration.Blazor.Chat.DxAIChat.ChatResponseProviderServiceKey) property).
 
 For additional information on how to connect `DxAIChat` to external AI agents and assistants, refer to the following topic: [Chat with Your Own Data](https://docs.devexpress.com/Blazor/405974/ai-powered-extensions/ai-chat-component/ai-chat-with-own-data).
 
@@ -106,7 +106,7 @@ For additional information on how to connect `DxAIChat` to external AI agents an
 
 ### Create an AI Agent
 
-The `AIAgentFactory.CreateAgentWithFileAsync` method does the following:
+The `AIAgentFactory.CreateAgentWithFileAsync` method performs the following operations:
 
 1. Uploads a file to OpenAI.
 2. Creates a short-lived vector store for the file if the File Search tool is enabled. Vector stores do not support XLSX files, so the Grid page disables this tool.
@@ -193,7 +193,10 @@ Use the [`MessageContentTemplate`](https://docs.devexpress.com/Blazor/DevExpress
 
 #### Set Up the AI Assistant for the Grid
 
-Handle the `OnAfterRenderAsync` event and call our Blazor Grid's [`ExportToXlsxAsync`](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGrid.ExportToXlsxAsync.overloads) method to generate data for the AI Assistant. Pass the data to the `AIAgentFactory.CreateAgentWithFileAsync` method, register the resulting provider in `AIChatSessionStore`, and assign the returned key to the chat's `ChatResponseProviderServiceKey` property. Close the session when the page is disposed to delete the uploaded file.
+Follow the steps below to set up the AI assistant for the Grid component:
+- Handle the `OnAfterRenderAsync` event and call the Grid's [`ExportToXlsxAsync`](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGrid.ExportToXlsxAsync.overloads) method to generate data for the AI Assistant.
+- Pass the data to the `AIAgentFactory.CreateAgentWithFileAsync` method, register the resulting provider in `AIChatSessionStore`, and assign the returned key to the chat's `ChatResponseProviderServiceKey` property.
+- Close the session when the page is disposed to delete the uploaded file.
 
 ```razor
 @implements IAsyncDisposable
@@ -286,7 +289,10 @@ The `TabTemplate` property specifies tab content. It dynamically renders the `AI
 
 The content for the AI Assistant tab is defined in the following file: [AITabRenderer.razor](./CS/DevExpress.AI.Samples.Blazor/Components/Reporting/AITabRenderer.razor).
 
-Handle the `OnInitializedAsync` event and call the [`ExportToPdf`](https://docs.devexpress.com/CoreLibraries/DevExpress.XtraPrinting.PrintingSystemBase.ExportToPdf(System.IO.Stream)) method to generate data for the AI Assistant. Pass the data to the `AIAgentFactory.CreateAgentWithFileAsync` method. The agent uses both the File Search and Code Interpreter tools to analyze the PDF document. Register the resulting provider in `AIChatSessionStore` and assign the returned key to the chat's `ChatResponseProviderServiceKey` property.
+Follow the steps below to set up the AI assistant for the Report Viewer:
+- Handle the `OnInitializedAsync` event and call the [`ExportToPdf`](https://docs.devexpress.com/CoreLibraries/DevExpress.XtraPrinting.PrintingSystemBase.ExportToPdf(System.IO.Stream)) method to generate data for the AI Assistant.
+- Pass the data to the `AIAgentFactory.CreateAgentWithFileAsync` method. The agent uses both File Search and Code Interpreter tools to analyze the PDF document.
+- Register the resulting provider in `AIChatSessionStore` and assign the returned key to the chat's `ChatResponseProviderServiceKey` property.
 
 ```razor
 @using DevExpress.AI.Samples.Blazor.Models
@@ -341,7 +347,7 @@ Handle the `OnInitializedAsync` event and call the [`ExportToPdf`](https://docs.
 }
 ```
 
-Use the [`MessageContentTemplate`](https://docs.devexpress.com/Blazor/DevExpress.AIIntegration.Blazor.Chat.DxAIChat.MessageContentTemplate) property to display rich-formatted messages. Use a markdown processor to convert response content to HTML code.
+Use the [`MessageContentTemplate`](https://docs.devexpress.com/Blazor/DevExpress.AIIntegration.Blazor.Chat.DxAIChat.MessageContentTemplate) property to display rich-formatted messages. Use a markdown processor to convert response content to HTML.
 
 **Files to Review:**
 
