@@ -193,7 +193,7 @@ Use the [`MessageContentTemplate`](https://docs.devexpress.com/Blazor/DevExpress
 
 #### Set Up the AI Assistant for the Grid
 
-Follow the steps below to set up the AI assistant for the Grid component:
+Follow these steps to set up the AI assistant for the Grid component:
 - Handle the `OnAfterRenderAsync` event and call the Grid's [`ExportToXlsxAsync`](https://docs.devexpress.com/Blazor/DevExpress.Blazor.DxGrid.ExportToXlsxAsync.overloads) method to generate data for the AI Assistant.
 - Pass the data to the `AIAgentFactory.CreateAgentWithFileAsync` method, register the resulting provider in `AIChatSessionStore`, and assign the returned key to the chat's `ChatResponseProviderServiceKey` property.
 - Close the session when the page is disposed to delete the uploaded file.
