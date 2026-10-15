@@ -4,6 +4,7 @@ using DevExpress.AI.Samples.Blazor.Services;
 using DevExpress.AI.Samples.Blazor.Components;
 using DevExpress.AI.Samples.Blazor.Data;
 using DevExpress.AIIntegration;
+using DevExpress.AIIntegration.Chat;
 using Microsoft.Extensions.AI;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,16 +24,17 @@ var azureOpenAIClient = new AzureOpenAIClient(
 
 var chatClient = azureOpenAIClient.GetChatClient(deploymentName).AsIChatClient();
 
-var assistantManager = new AIAssistantManager(azureOpenAIClient, deploymentName);
-
 builder.Services.AddDevExpressBlazor();
 builder.Services.AddDevExpressServerSideBlazorReportViewer();
 builder.Services.AddChatClient(chatClient);
-builder.Services.AddDevExpressAI((config) => {
-    //Reference the DevExpress.AIIntegration.OpenAI NuGet package to use Open AI Assistants
-    config.RegisterOpenAIAssistants(azureOpenAIClient, deploymentName); 
-});
-builder.Services.AddSingleton(assistantManager);
+builder.Services.AddDevExpressAI();
+builder.Services.AddSingleton(sp =>
+    new AIAgentFactory(azureOpenAIClient, deploymentName, sp.GetRequiredService<ILogger<AIAgentFactory>>()));
+builder.Services.AddSingleton<AIChatSessionStore>();
+// Resolve an IChatResponseProvider for any key registered in AIChatSessionStore.
+// DxAIChat components bind to their providers with the ChatResponseProviderServiceKey property.
+builder.Services.AddKeyedTransient<IChatResponseProvider>(KeyedService.AnyKey,
+    (sp, key) => sp.GetRequiredService<AIChatSessionStore>().GetProvider(key as string));
 builder.Services.AddSingleton<IDemoReportSource, DemoReportSource>();
 builder.Services.AddDbContextFactory<IssuesContext>(opt => {
     opt.UseSqlite(builder.Configuration.GetConnectionString("IssuesConnectionString"));
