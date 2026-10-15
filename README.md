@@ -6,35 +6,27 @@
 <!-- default badges end -->
 # Blazor Grid and Report Viewer — Incorporate an AI Assistant (Azure OpenAI) in Your Next DevExpress-Powered Blazor App 
 
-This example adds a Copilot-inspired chat window (DevExpress [`DxAIChat`](http://docs.devexpress.com/Blazor/DevExpress.AIIntegration.Blazor.Chat.DxAIChat) component) to a DevExpress-powered Blazor application (using both DevExpress Report Viewer and Blazor Grid components). The chat implementation uses an AI agent built on the [Azure OpenAI Responses API](https://learn.microsoft.com/en-us/azure/ai-foundry/openai/how-to/responses) and [Microsoft Agent Framework](https://learn.microsoft.com/en-us/agent-framework/) to answer user questions (based on information displayed in the report and/or data grid). 
+This sample app integrates AI-powered chat controls with DevExpress data-aware components.
 
-To integrate AI-powered chat capabilities to your next great Blazor application, please follow the steps below:  
+One application page contains a [DevExpress Blazor Grid](https://www.devexpress.com/blazor/data-grid/) component and the DevExpress Chat Control ([`DxAIChat`](https://docs.devexpress.com/Blazor/DevExpress.AIIntegration.Blazor.Chat.DxAIChat)).
 
-1. Register AI Services within the application. 
-2. Add the DevExpress Chat component (`DxAIChat`). 
-3. Export component data, create an AI agent to process this data, and bind the agent to the chat. 
+![Blazor Grid and Integrated AI Assistant](images/data-grid.png)
 
-The following DevExpress Blazor Components were used in this sample project:
+You can use the chat control to ask questions about grid data. For example, you can ask the AI Assistant to:
 
-- [DevExpress Blazor Grid](https://www.devexpress.com/blazor/data-grid/)
+- Prioritize tasks.
+- Count tasks by status.
+- List tasks for a specific owner or with a specific priority.
 
-    Our Blazor Grid component displays project management data. You can use the AI Assistant to:
+The second page contains a [DevExpress Report Viewer](https://www.devexpress.com/subscriptions/reporting/) and an integrated DevExpress Chat Control. You can select one of three reports connected to different data sources:
 
-    - Prioritize tasks.
-    - Count tasks using status data.
-    - Filter tasks by owner or priority. 
+![Blazor Report Viewer and Integrated AI Assistant](images/report-viewer.png)
 
-    Implementation details: [Use an AI Assistant with the DevExpress Blazor Grid](#use-an-ai-assistant-with-the-devexpress-blazor-grid).
+You can use the chat control to analyze report data. Here are examples:
 
-- [Report Viewer](https://www.devexpress.com/subscriptions/reporting/)
-
-    Our Report Viewer includes several reports bound to different data. Use the AI Assistant to interact with report data as follows: 
-
-    - *Drill-Down Report*: Analyze invoice totals, delivery status, and averages. 
-    - *Market Share Report*: Compare market share changes across regions.
-    - *Restaurant Menu*: Examine price range and categorize vegetarian options. 
-
-    Implementation details: [Add an AI Assistant to the DevExpress Blazor Report Viewer](#add-an-ai-assistant-to-the-devexpress-blazor-report-viewer).
+- *Drill-Down Report*: Analyze invoice totals, delivery status, and averages.
+- *Market Share Report*: Compare market share changes across regions.
+- *Restaurant Menu*: Examine price range and categorize vegetarian options.
 
 AI agent initialization may take time. `DxAIChat` is ready for use once Microsoft Azure OpenAI completes source document indexing.
 
@@ -148,9 +140,7 @@ You can review and tailor AI assistant instructions in the following file: [Inst
 
 ### Use an AI Assistant with the DevExpress Blazor Grid
 
-This example includes a page with both the DevExpress Blazor Grid (`DxGrid`) and Blazor Chat component (`DxAIChat`): 
-
-![Blazor Grid and Integrated AI Assistant](images/data-grid.png)
+The Grid page contains the DevExpress Blazor Grid (`DxGrid`) and the Blazor Chat component (`DxAIChat`).
 
 To configure our Blazor Grid (data binding and customizations), review the following code file: [Grid.razor](./CS/DevExpress.AI.Samples.Blazor/Components/Pages/Grid.razor).
 
@@ -242,9 +232,7 @@ Follow these steps to set up the AI assistant for the Grid component:
 
 ###  Add an AI Assistant to the DevExpress Blazor Report Viewer
 
-As you can see in the following image, this sample uses our Blazor Report Viewer alongside the DevExpress Chat component (the AI Assistant tab uses the `DxAIChat` component to display requests and responses): 
-
-![Blazor Report Viewer and Integrated AI Assistant](images/report-viewer.png)
+The Report Viewer page displays our Blazor Report Viewer alongside the DevExpress Chat component (the AI Assistant tab uses the `DxAIChat` component to display requests and responses).
 
 #### Add New Tab for Your AI Assistant
 
