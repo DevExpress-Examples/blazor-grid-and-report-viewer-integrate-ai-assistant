@@ -142,7 +142,7 @@ Review the following file for Grid configuration details (data binding and custo
 
 The Grid page contains the DevExpress Blazor Grid (`DxGrid`) and the AI Chat.
 
-To configure our Blazor Grid (data binding and customizations), review the following code file: [Grid.razor](./CS/DevExpress.AI.Samples.Blazor/Components/Pages/Grid.razor).
+To configure the Grid component (data binding and customizations), review the following code file: [Grid.razor](./CS/DevExpress.AI.Samples.Blazor/Components/Pages/Grid.razor).
 
 #### Add AI Chat to the Grid Page
 
