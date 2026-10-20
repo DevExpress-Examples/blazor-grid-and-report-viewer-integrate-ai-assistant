@@ -22,13 +22,13 @@ The second page contains our [DevExpress Blazor Report Viewer](https://www.devex
 
 ![Blazor Report Viewer and Integrated AI Assistant](images/report-viewer.png)
 
-For example, you can ask the AI Assistant to do the following:
+You can ask the AI Assistant to do the following:
 
 - *Drill-Down Report*: Analyze invoice totals, delivery status, and averages.
 - *Market Share Report*: Compare market share changes across regions.
 - *Restaurant Menu*: Examine price range and categorize vegetarian options.
 
-AI agent initialization may take time (file upload and, on the Report Viewer page, document indexing). The page displays a loading message until the agent is ready.
+AI agent initialization may take time (file upload and, on the Report Viewer page, document indexing). The app displays a loading message until the agent is ready.
 
 > [!Note]
 > We use the following versions of Microsoft AI packages in our `v26.1.3+` source code:
@@ -87,7 +87,7 @@ builder.Services.AddKeyedTransient<IChatResponseProvider>(KeyedService.AnyKey,
 
 The `AIAgentFactory` service creates AI agents to process exported component data. The factory wraps each agent in an `IChatResponseProvider` object. The `AIChatSessionStore` service stores these providers under unique keys. The keyed `IChatResponseProvider` registration allows each `DxAIChat` component to obtain its provider by key (using the [`ChatResponseProviderServiceKey`](https://docs.devexpress.com/Blazor/DevExpress.AIIntegration.Blazor.Chat.DxAIChat.ChatResponseProviderServiceKey) property).
 
-Refer to the following topic to connect `DxAIChat` to external AI agents and assistants: [Chat with Your Own Data](https://docs.devexpress.com/Blazor/405974/ai-powered-extensions/ai-chat-component/ai-chat-with-own-data).
+Refer to the following help topic for additional information on connecting `DxAIChat` to external AI agents and assistants: [Chat with Your Own Data](https://docs.devexpress.com/Blazor/405974/ai-powered-extensions/ai-chat-component/ai-chat-with-own-data).
 
 >[!NOTE]
 > Azure OpenAI Responses API and tool availability depends on region and model. For additional information, refer to the following document: [Azure OpenAI Responses API](https://learn.microsoft.com/en-us/azure/ai-foundry/openai/how-to/responses).
