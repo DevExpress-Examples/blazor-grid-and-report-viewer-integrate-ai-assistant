@@ -30,16 +30,6 @@ You can ask the AI Assistant to do the following:
 
 AI agent initialization may take time (file upload and, on the Report Viewer page, document indexing). The app displays a loading message until the agent is ready.
 
-> [!Note]
-> We use the following versions of Microsoft AI packages in our `v26.1.3+` source code:
->
-> * `Microsoft.Extensions.AI` | **v10.6.0**
-> * `Microsoft.Extensions.AI.OpenAI` | **v10.6.0**
-> * `Microsoft.Agents.AI.OpenAI` | **v1.5.0**
-> * `Azure.AI.OpenAI` | **v2.9.0-beta.1**
->
-> We cannot guarantee compatibility or correct operation with higher versions. Refer to the following announcement for additional information: [DevExpress.AIIntegration moves to a stable version](https://supportcenter.devexpress.com/ticket/details/t1292705/devexpress-aiintegration-references-stable-versions-of-microsoft-ai-packages).
-
 ## Implementation Details
 
 ### Register AI Services
@@ -54,6 +44,16 @@ Reference the following NuGet packages:
 - `Azure.AI.OpenAI`
 - `Microsoft.Agents.AI.OpenAI`
 - `Microsoft.Extensions.AI.OpenAI`
+
+> [!Note]
+> We use the following versions of Microsoft AI packages in our `v26.1.3+` source code:
+>
+> * `Microsoft.Extensions.AI` | **v10.6.0**
+> * `Microsoft.Extensions.AI.OpenAI` | **v10.6.0**
+> * `Microsoft.Agents.AI.OpenAI` | **v1.5.0**
+> * `Azure.AI.OpenAI` | **v2.9.0-beta.1**
+>
+> We cannot guarantee compatibility or correct operation with higher versions. Refer to the following announcement for additional information: [DevExpress.AIIntegration moves to a stable version](https://supportcenter.devexpress.com/ticket/details/t1292705/devexpress-aiintegration-references-stable-versions-of-microsoft-ai-packages).
 
 Add the following code snippet to the `Program.cs` file to register AI services:
 
