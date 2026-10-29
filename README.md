@@ -4,21 +4,21 @@
 [![](https://img.shields.io/badge/📖_How_to_use_DevExpress_Examples-e9f6fc?style=flat-square)](https://docs.devexpress.com/GeneralInformation/403183)
 [![](https://img.shields.io/badge/💬_Leave_Feedback-feecdd?style=flat-square)](#does-this-example-address-your-development-requirementsobjectives)
 <!-- default badges end -->
-# Blazor Grid and Report Viewer — Incorporate an AI Assistant (Azure OpenAI) in Your Next DevExpress-Powered Blazor App 
+# Blazor Grid and Report Viewer — Add an AI Assistant (Azure OpenAI) to Your Next DevExpress-Powered Blazor App 
 
 This sample app integrates AI-powered chat controls with DevExpress data-aware components.
 
-One application page contains a [DevExpress Blazor Grid](https://www.devexpress.com/blazor/data-grid/) component and the DevExpress Blazor AI Chat component ([`DxAIChat`](https://docs.devexpress.com/Blazor/DevExpress.AIIntegration.Blazor.Chat.DxAIChat)).
+The sample includes an application page with both a [DevExpress Blazor Grid](https://www.devexpress.com/blazor/data-grid/) component and the DevExpress Blazor AI Chat component ([`DxAIChat`](https://docs.devexpress.com/Blazor/DevExpress.AIIntegration.Blazor.Chat.DxAIChat)).
 
 ![Blazor Grid and Integrated AI Assistant](images/data-grid.png)
 
-You can use the chat control to ask questions about grid data. For example, you can ask the AI Assistant to do the following:
+You can use the chat control to interrogate grid data. For example, you can ask the AI Assistant to do the following:
 
 - Prioritize tasks.
 - Count tasks by status.
 - List tasks for a specific owner or with a specific priority.
 
-The second page contains our [DevExpress Blazor Report Viewer](https://www.devexpress.com/subscriptions/reporting/) and an integrated AI Chat. You can select one of three reports connected to different data sources:
+The second sample page contains the [DevExpress Blazor Report Viewer](https://www.devexpress.com/subscriptions/reporting/) alongside our integrated AI Chat component. You can select one of three reports connected to different data sources:
 
 ![Blazor Report Viewer and Integrated AI Assistant](images/report-viewer.png)
 
@@ -28,7 +28,7 @@ You can ask the AI Assistant to do the following:
 - *Market Share Report*: Compare market share changes across regions.
 - *Restaurant Menu*: Examine price range and categorize vegetarian options.
 
-AI agent initialization may take time (file upload and, on the Report Viewer page, document indexing). The app displays a loading message until the agent is ready.
+AI agent initialization may take time (file upload and — on the Report Viewer page — document indexing). The app displays a loading message until the agent is ready.
 
 ## Implementation Details
 
@@ -53,7 +53,7 @@ Reference the following NuGet packages:
 > * `Microsoft.Agents.AI.OpenAI` | **v1.5.0**
 > * `Azure.AI.OpenAI` | **v2.9.0-beta.1**
 >
-> We cannot guarantee compatibility or correct operation with higher versions. Refer to the following announcement for additional information: [DevExpress.AIIntegration moves to a stable version](https://supportcenter.devexpress.com/ticket/details/t1292705/devexpress-aiintegration-references-stable-versions-of-microsoft-ai-packages).
+> We cannot guarantee compatibility or correct operation with higher versions. Refer to the following announcement for additional information in this regard: [DevExpress.AIIntegration moves to a stable version](https://supportcenter.devexpress.com/ticket/details/t1292705/devexpress-aiintegration-references-stable-versions-of-microsoft-ai-packages).
 
 Add the following code snippet to the `Program.cs` file to register AI services:
 
@@ -87,7 +87,7 @@ builder.Services.AddKeyedTransient<IChatResponseProvider>(KeyedService.AnyKey,
 
 The `AIAgentFactory` service creates AI agents to process exported component data. The factory wraps each agent in an `IChatResponseProvider` object. The `AIChatSessionStore` service stores these providers under unique keys. The keyed `IChatResponseProvider` registration allows each `DxAIChat` component to obtain its provider by key (using the [`ChatResponseProviderServiceKey`](https://docs.devexpress.com/Blazor/DevExpress.AIIntegration.Blazor.Chat.DxAIChat.ChatResponseProviderServiceKey) property).
 
-Refer to the following help topic for additional information on connecting `DxAIChat` to external AI agents and assistants: [Chat with Your Own Data](https://docs.devexpress.com/Blazor/405974/ai-powered-extensions/ai-chat-component/ai-chat-with-own-data).
+Refer to the following help topic for additional information when connecting `DxAIChat` to external AI agents and assistants: [Chat with Your Own Data](https://docs.devexpress.com/Blazor/405974/ai-powered-extensions/ai-chat-component/ai-chat-with-own-data).
 
 >[!NOTE]
 > Azure OpenAI Responses API and tool availability depends on region and model. For additional information, refer to the following document: [Azure OpenAI Responses API](https://learn.microsoft.com/en-us/azure/ai-foundry/openai/how-to/responses).
@@ -101,8 +101,8 @@ Refer to the following help topic for additional information on connecting `DxAI
 The `AIAgentFactory.CreateAgentWithFileAsync` method performs the following operations:
 
 1. Uploads a file to OpenAI.
-2. Creates a short-lived vector store for the file if the File Search tool is enabled. Vector stores do not support XLSX files, so the Grid page disables this tool.
-3. Creates a Responses API agent with the specified instructions, the Code Interpreter tool, and the optional File Search tool.
+2. Creates a short-lived vector store for the file if the File Search tool is enabled. Since Vector stores do not support XLSX files, the Grid page disables this tool.
+3. Creates a Responses API agent with specified instructions, the Code Interpreter tool, and the optional File Search tool.
 4. Starts an agent session that retains conversation history.
 5. Returns an `IChatResponseProvider` object and a delegate that deletes the uploaded file and the vector store.
 
@@ -146,7 +146,7 @@ To configure the Grid component (data binding and customizations), review the fo
 
 #### Add AI Chat to the Grid Page
 
-The following code snippet adds the [`DxAIChat`](https://docs.devexpress.com/Blazor/DevExpress.AIIntegration.Blazor.Chat.DxAIChat) component to the page. The page displays the chat once the associated AI agent is ready (a loading message appears until then):
+The following code snippet adds the [`DxAIChat`](https://docs.devexpress.com/Blazor/DevExpress.AIIntegration.Blazor.Chat.DxAIChat) component to the page. The page displays the chat once the associated AI agent is ready (a loading message is displayed while waiting for the AI agent):
 
 ```razor
 @using DevExpress.AIIntegration.Blazor.Chat
