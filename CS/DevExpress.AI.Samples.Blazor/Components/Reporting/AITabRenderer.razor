@@ -1,25 +1,27 @@
-﻿@using DevExpress.AI.Samples.Blazor.Models
+@using DevExpress.AI.Samples.Blazor.Models
 @using DevExpress.AI.Samples.Blazor.Services
 @using DevExpress.AIIntegration.Blazor.Chat
 @using System.Text.RegularExpressions
-@using DevExpress.AIIntegration.OpenAI.Services
 @using Markdig
 
 @implements IAsyncDisposable
-@inject AIAssistantManager AssistantManager
+@inject AIAgentFactory AgentFactory
+@inject AIChatSessionStore ChatSessionStore
 
-<DxAIChat CssClass="my-report-chat" Initialized="ChatInitialized">
-    <MessageContentTemplate>
-        <div class="my-chat-content">
-            @ToHtml(context.Content)
-        </div>
-    </MessageContentTemplate>
-</DxAIChat>
+@if(chatProviderKey != null) {
+    <DxAIChat CssClass="my-report-chat" ChatResponseProviderServiceKey="@chatProviderKey">
+        <MessageContentTemplate>
+            <div class="my-chat-content">
+                @ToHtml(context.Text)
+            </div>
+        </MessageContentTemplate>
+    </DxAIChat>
+} else {
+    <div class="my-report-chat my-chat-loading">Preparing the AI Assistant...</div>
+}
 
 @code {
-    string assistantId;
-    string threadId;
-    string fileId;
+    string chatProviderKey;
     [Parameter] public UserAssistantTabContentModel Model { get; set; }
     string ClearAnnotations(string text) {
         //To clear out annotations in a response from the assistant.
@@ -31,18 +33,18 @@
         return (MarkupString)Markdown.ToHtml(text);
     }
 
-    async Task ChatInitialized(IAIChat aIChat) {
+    protected override async Task OnInitializedAsync() {
         using (MemoryStream ms = Model.GetReportData()) {
-            (assistantId, threadId, fileId) = await AssistantManager.CreateAssistantAsync(
-                ms, 
-                "report.pdf", 
+            var (provider, cleanup) = await AgentFactory.CreateAgentWithFileAsync(
+                ms,
+                "report.pdf",
                 AssistantHelper.GetAIAssistantInstructions("pdf")
             );
-            await aIChat.SetupAssistantAsync(assistantId, threadId);
+            chatProviderKey = ChatSessionStore.Register(provider, cleanup);
         }
     }
-    
+
     public async ValueTask DisposeAsync() {
-        await AssistantManager.CleanUpAssistantAsync(assistantId, threadId, fileId);
+        await ChatSessionStore.CloseAsync(chatProviderKey);
     }
 }
