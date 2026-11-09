@@ -10,7 +10,6 @@
     <PackageReference Include="Azure.AI.OpenAI" Version="2.2.0-beta.5" />
     <PackageReference Include="Azure.AI.OpenAI.Assistants" Version="1.0.0-beta.4" />
     <PackageReference Include="DevExpress.AIIntegration.Blazor" Version="26.1.5" />
-DevExpress.AIIntegration 26.1.4
     <PackageReference Include="DevExpress.AIIntegration.Agents" Version="26.1.5" />
     <PackageReference Include="DevExpress.Blazor.Reporting.Viewer" Version="26.1.5" />
     <PackageReference Include="DevExpress.Drawing.Skia" Version="26.1.5" />
